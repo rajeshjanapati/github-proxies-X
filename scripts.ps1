@@ -15,32 +15,32 @@ $orgName = "esi-apigee-x-394004"
 $envName = "eval"
 $apiKey = "Bearer $token"
 
-# Define the GitHub API endpoint to get the ZIP file
-$githubApiUrl = "https://api.github.com/repos/$repositoryOwner/$repositoryName/zipball/$branchName"
+# # Define the GitHub API endpoint to get the ZIP file
+# $githubApiUrl = "https://api.github.com/repos/$repositoryOwner/$repositoryName/zipball/$branchName"
 
-# Create headers with the GitHub authentication token and User-Agent
-$githubHeaders = @{
-    Authorization = "Bearer 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"
-    # "User-Agent" = "PowerShell-GitHub-Downloader"
-    "User-Agent" = ".github/workflows"
-    # "USER_AGENT" = ".github/workflows"
-    # "Accept"="application/vnd.github+json"
-}
+# # Create headers with the GitHub authentication token and User-Agent
+# $githubHeaders = @{
+#     Authorization = "Bearer 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"
+#     # "User-Agent" = "PowerShell-GitHub-Downloader"
+#     "User-Agent" = ".github/workflows"
+#     # "USER_AGENT" = ".github/workflows"
+#     # "Accept"="application/vnd.github+json"
+# }
 
 
-$rateLimitUrl = "https://api.github.com/rate_limit"
+# $rateLimitUrl = "https://api.github.com/rate_limit"
 
-$rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Method 'GET' -Headers $githubHeaders
+# $rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Method 'GET' -Headers $githubHeaders
 
-# Output the rate limit information
-Write-Host "Rate Limit: $($rateLimitResponse.resources.core.limit)"
-Write-Host "Remaining Requests: $($rateLimitResponse.resources.core.remaining)"
+# # Output the rate limit information
+# Write-Host "Rate Limit: $($rateLimitResponse.resources.core.limit)"
+# Write-Host "Remaining Requests: $($rateLimitResponse.resources.core.remaining)"
 
 # Define the path to save the downloaded ZIP file
-$zipFilePath = "downloaded.zip"
+$zipFilePath = "esi-apigee-x-394004-proxy-FLSessionPreFilter-rev5.zip"
 
-# Download the ZIP file from GitHub
-Invoke-WebRequest -Uri $githubApiUrl -Headers $githubHeaders -OutFile $zipFilePath
+# # Download the ZIP file from GitHub
+# Invoke-WebRequest -Uri $githubApiUrl -Headers $githubHeaders -OutFile $zipFilePath
 
 # Check if the ZIP file download was successful
 if (Test-Path -Path $zipFilePath) {
