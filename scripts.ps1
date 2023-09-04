@@ -34,7 +34,7 @@ Write-Host "Proxy-Name: $proxyName"
 
 # Define the list of GitHub file URLs to download
 $githubFileUrls = @(
-    "https://github.com/$repositoryOwner/$repositoryName/zipball/$branchName",
+    "https://github.com/$repositoryOwner/$repositoryName/zipball/$branchName"
     # Add more file URLs as needed
 )
 
