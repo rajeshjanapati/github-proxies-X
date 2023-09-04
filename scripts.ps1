@@ -71,6 +71,29 @@ if (Test-Path -Path $zipFilePath) {
     Write-Host "Failed to download the ZIP file from GitHub."
 }
 
+# ------------------POSTMAN------------------------------------
+$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+$headers.Add("Authorization", "Bearer $token")
+
+$multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
+$multipartFile = 'esi-apigee-x-394004-proxy-FLSessionPreFilter-rev5.zip'
+$FileStream = [System.IO.FileStream]::new($multipartFile, [System.IO.FileMode]::Open)
+$fileHeader = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
+$fileHeader.Name = "file"
+$fileHeader.FileName = "esi-apigee-x-394004-proxy-FLSessionPreFilter-rev5.zip"
+$fileContent = [System.Net.Http.StreamContent]::new($FileStream)
+$fileContent.Headers.ContentDisposition = $fileHeader
+$multipartContent.Add($fileContent)
+
+$body = $multipartContent
+
+$response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name=esi-apigee-x-394004-proxy-FLSessionPreFilter-rev5&action=import' -Method 'POST' -Headers $headers -Body $body
+$response | ConvertTo-Json
+
+
+
+# --------------------------------------------------------------
+
 
 
 # # Set your GitHub repository information
