@@ -12,10 +12,10 @@ $githubToken = "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"
 
 # Clone the repository
 git clone https://github.com/rajeshjanapati/github-proxies-X.git
-cd $repositoryName
+# cd $repositoryName
 
 # Set the directory path where you want to search for .zip files
-$directoryPath = "$repositoryName"
+# $directoryPath = "$repositoryName"
 
 # Use Get-ChildItem to list all files in the directory with a .zip extension
 $zipFiles = Get-ChildItem -Path $directoryPath -Filter *.zip
