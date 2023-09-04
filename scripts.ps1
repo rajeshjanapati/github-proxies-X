@@ -6,8 +6,8 @@ $headers = @{Authorization = "Bearer $token"}
 
 # Set your GitHub repository information
 $repositoryOwner = "rajeshjanapati@gmail.com"
-$repositoryName = "apigee-artifacts"
-$branchName = "release/org"  # Change this to the branch you want to access
+$repositoryName = "github-proxies-X"
+$branchName = "main"  # Change this to the branch you want to access
 $githubToken = "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"
 
 # Set your Apigee X organization and environment
@@ -26,13 +26,13 @@ $githubHeaders = @{
 }
 
 
-$rateLimitUrl = "https://api.github.com/rate_limit"
+# $rateLimitUrl = "https://api.github.com/rate_limit"
 
-$rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Method 'GET' -Headers $githubHeaders
+# $rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Method 'GET' -Headers $githubHeaders
 
-# Output the rate limit information
-Write-Host "Rate Limit: $($rateLimitResponse.resources.core.limit)"
-Write-Host "Remaining Requests: $($rateLimitResponse.resources.core.remaining)"
+# # Output the rate limit information
+# Write-Host "Rate Limit: $($rateLimitResponse.resources.core.limit)"
+# Write-Host "Remaining Requests: $($rateLimitResponse.resources.core.remaining)"
 
 # Define the path to save the downloaded ZIP file
 $zipFilePath = "downloaded.zip"
