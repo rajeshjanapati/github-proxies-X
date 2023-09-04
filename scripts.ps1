@@ -51,7 +51,7 @@ if (Test-Path -Path $zipFilePath) {
 
     # Create headers with the Apigee X API key and Content-Type
     $apigeeHeaders = @{
-        "x-api-key" = $token
+        "x-api-key" = "Bearer $token"
         "Content-Type" = "application/octet-stream"
     }
 
