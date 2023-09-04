@@ -10,6 +10,24 @@ $repositoryName = "github-proxies-X"
 $branchName = "main"  # Change this to the branch you want to access
 $githubToken = "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"
 
+# Clone the repository
+git clone https://github.com/rajeshjanapati/github-proxies-X.git
+cd $repositoryName
+
+# Set the directory path where you want to search for .zip files
+$directoryPath = "$repositoryName"
+
+# Use Get-ChildItem to list all files in the directory with a .zip extension
+$zipFiles = Get-ChildItem -Path $directoryPath -Filter *.zip
+
+# Loop through each .zip file and do something with them
+foreach ($zipFile in $zipFiles) {
+    # Get the full path of the .zip file
+    $zipFilePath = $zipFile.FullName
+
+    # Do something with the file, for example, print the file name
+    Write-Host "Found .zip file: $($zipFile.Name)"
+
 # Set your Apigee X organization and environment
 $orgName = "esi-apigee-x-394004"
 $envName = "eval"
@@ -27,14 +45,6 @@ $apiKey = "Bearer $token"
 #     # "Accept"="application/vnd.github+json"
 # }
 
-
-# $rateLimitUrl = "https://api.github.com/rate_limit"
-
-# $rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Method 'GET' -Headers $githubHeaders
-
-# # Output the rate limit information
-# Write-Host "Rate Limit: $($rateLimitResponse.resources.core.limit)"
-# Write-Host "Remaining Requests: $($rateLimitResponse.resources.core.remaining)"
 
 # Define the path to save the downloaded ZIP file
 $zipFilePath = "esi-apigee-x-394004-proxy-FLSessionPreFilter-rev5.zip"
@@ -72,23 +82,24 @@ $zipFilePath = "esi-apigee-x-394004-proxy-FLSessionPreFilter-rev5.zip"
 # }
 
 # ------------------POSTMAN------------------------------------
-$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-$headers.Add("Authorization", "Bearer $token")
 
-$multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
-$multipartFile = $zipFilePath
-$FileStream = [System.IO.FileStream]::new($multipartFile, [System.IO.FileMode]::Open)
-$fileHeader = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
-$fileHeader.Name = "file"
-$fileHeader.FileName = $zipFilePath
-$fileContent = [System.Net.Http.StreamContent]::new($FileStream)
-$fileContent.Headers.ContentDisposition = $fileHeader
-$multipartContent.Add($fileContent)
+# $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+# $headers.Add("Authorization", "Bearer $token")
 
-$body = $multipartContent
+# $multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
+# $multipartFile = $zipFilePath
+# $FileStream = [System.IO.FileStream]::new($multipartFile, [System.IO.FileMode]::Open)
+# $fileHeader = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
+# $fileHeader.Name = "file"
+# $fileHeader.FileName = $zipFilePath
+# $fileContent = [System.Net.Http.StreamContent]::new($FileStream)
+# $fileContent.Headers.ContentDisposition = $fileHeader
+# $multipartContent.Add($fileContent)
 
-$response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name=esi-apigee-x-394004-proxy-FLSessionPreFilter-rev5&action=import' -Method 'POST' -Headers $headers -Body $body
-$response | ConvertTo-Json
+# $body = $multipartContent
+
+# $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name=esi-apigee-x-394004-proxy-FLSessionPreFilter-rev5&action=import' -Method 'POST' -Headers $headers -Body $body
+# $response | ConvertTo-Json
 
 
 
