@@ -21,7 +21,8 @@ $githubApiUrl = "https://api.github.com/repos/$repositoryOwner/$repositoryName/z
 # Create headers with the GitHub authentication token and User-Agent
 $githubHeaders = @{
     Authorization = "Bearer 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"
-    "User-Agent" = "PowerShell-GitHub-Downloader"
+    # "User-Agent" = "PowerShell-GitHub-Downloader"
+    USER_AGENT="GitHub-Actions-Workflow/${{ github.workflow }} (${{ github.run_number }})"
 }
 
 
