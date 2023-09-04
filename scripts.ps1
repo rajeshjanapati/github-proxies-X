@@ -20,15 +20,15 @@ $githubApiUrl = "https://api.github.com/repos/$repositoryOwner/$repositoryName/z
 
 # Create headers with the GitHub authentication token and User-Agent
 $githubHeaders = @{
-    "Authorization" = "Bearer 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"
+    Authorization = "Bearer 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"
     # "User-Agent" = "PowerShell-GitHub-Downloader"
-    "USER_AGENT" = ".github/workflows/github-proxies-X.yml"
+    # "USER_AGENT" = ".github/workflows/github-proxies-X.yml"
 }
 
 
 $rateLimitUrl = "https://api.github.com/rate_limit"
 
-$rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Headers $githubHeaders
+$rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Method 'GET' -Headers $githubHeaders
 
 # Output the rate limit information
 Write-Host "Rate Limit: $($rateLimitResponse.resources.core.limit)"
@@ -40,31 +40,31 @@ $zipFilePath = "downloaded.zip"
 # Download the ZIP file from GitHub
 Invoke-WebRequest -Uri $githubApiUrl -Headers $githubHeaders -OutFile $zipFilePath
 
-# Check if the ZIP file download was successful
-if (Test-Path -Path $zipFilePath) {
-    Write-Host "ZIP file downloaded successfully from GitHub."
+# # Check if the ZIP file download was successful
+# if (Test-Path -Path $zipFilePath) {
+#     Write-Host "ZIP file downloaded successfully from GitHub."
 
-    # Define the Apigee X API endpoint to upload the ZIP file
-    $apigeeApiUrl = "https://apigee.googleapis.com/v1/organizations/$orgName/environments/$envName/deployments"
+#     # Define the Apigee X API endpoint to upload the ZIP file
+#     $apigeeApiUrl = "https://apigee.googleapis.com/v1/organizations/$orgName/environments/$envName/deployments"
 
-    # Create headers with the Apigee X API key and Content-Type
-    $apigeeHeaders = @{
-        "x-api-key" = $apiKey
-        "Content-Type" = "application/octet-stream"
-    }
+#     # Create headers with the Apigee X API key and Content-Type
+#     $apigeeHeaders = @{
+#         "x-api-key" = $apiKey
+#         "Content-Type" = "application/octet-stream"
+#     }
 
-    # Read the contents of the ZIP file
-    $zipFileContent = [System.IO.File]::ReadAllBytes($zipFilePath)
+#     # Read the contents of the ZIP file
+#     $zipFileContent = [System.IO.File]::ReadAllBytes($zipFilePath)
 
-    # Send a POST request to upload the ZIP file to Apigee X
-    $apigeeResponse = Invoke-RestMethod -Uri $apigeeApiUrl -Method 'POST' -Headers $apigeeHeaders -Body $zipFileContent
+#     # Send a POST request to upload the ZIP file to Apigee X
+#     $apigeeResponse = Invoke-RestMethod -Uri $apigeeApiUrl -Method 'POST' -Headers $apigeeHeaders -Body $zipFileContent
 
-    # Check if the ZIP file upload was successful
-    if ($apigeeResponse -ne $null) {
-        Write-Host "ZIP file uploaded successfully to Apigee X."
-    } else {
-        Write-Host "Failed to upload the ZIP file to Apigee X."
-    }
-} else {
-    Write-Host "Failed to download the ZIP file from GitHub."
-}
+#     # Check if the ZIP file upload was successful
+#     if ($apigeeResponse -ne $null) {
+#         Write-Host "ZIP file uploaded successfully to Apigee X."
+#     } else {
+#         Write-Host "Failed to upload the ZIP file to Apigee X."
+#     }
+# } else {
+#     Write-Host "Failed to download the ZIP file from GitHub."
+# }
