@@ -20,7 +20,7 @@ $githubApiUrl = "https://api.github.com/repos/$repositoryOwner/$repositoryName/z
 
 # Create headers with the GitHub authentication token and User-Agent
 $githubHeaders = @{
-    "Authorization" = "Bearer $githubToken"
+    "Authorization" = "Bearer $githubToken",
     "User-Agent" = "PowerShell-GitHub-Downloader"
 }
 
