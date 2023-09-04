@@ -47,7 +47,7 @@ if (Test-Path -Path $zipFilePath) {
     Write-Host "ZIP file downloaded successfully from GitHub."
 
     # Define the Apigee X API endpoint to upload the ZIP file
-    $apigeeApiUrl = "https://apigee.googleapis.com/v1/organizations/$orgName/environments/$envName/deployments"
+    $apigeeApiUrl = "https://apigee.googleapis.com/v1/organizations/$orgName/"
 
     # Create headers with the Apigee X API key and Content-Type
     $apigeeHeaders = @{
@@ -59,7 +59,7 @@ if (Test-Path -Path $zipFilePath) {
     $zipFileContent = [System.IO.File]::ReadAllBytes($zipFilePath)
 
     # Send a POST request to upload the ZIP file to Apigee X
-    $apigeeResponse = Invoke-RestMethod -Uri $apigeeApiUrl -Method 'POST' -Headers $apigeeHeaders -Body $zipFileContent
+    $apigeeResponse = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name=$zipFilePath&action=import" -Method 'POST' -Headers $apigeeHeaders -Body $zipFileContent
 
     # Check if the ZIP file upload was successful
     if ($apigeeResponse -ne $null) {
