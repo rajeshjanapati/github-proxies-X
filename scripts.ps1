@@ -43,7 +43,7 @@ foreach ($zipFile in $zipFiles) {
 
     $body = $multipartContent
 
-    $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name='+$zipFilePath+'&action=import' -Method 'POST' -Headers $headers -Body $body
+    $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name="+$zipFilePath+"&action=import" -Method 'POST' -Headers $headers -Body $body
     $response | ConvertTo-Json
 
 }
