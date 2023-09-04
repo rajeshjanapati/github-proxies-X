@@ -27,7 +27,7 @@ $githubHeaders = @{
 
 $rateLimitUrl = "https://api.github.com/rate_limit"
 
-$rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Headers $githubHeaders
+$rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Method 'GET' -Headers $githubHeaders
 
 # Output the rate limit information
 Write-Host "Rate Limit: $($rateLimitResponse.resources.core.limit)"
