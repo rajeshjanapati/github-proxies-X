@@ -27,6 +27,7 @@ foreach ($zipFile in $zipFiles) {
 
     # Do something with the file, for example, print the file name
     Write-Host "Found .zip file: $($zipFile.Name)"
+}
 
 # Set your Apigee X organization and environment
 $orgName = "esi-apigee-x-394004"
