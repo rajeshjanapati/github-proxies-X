@@ -49,11 +49,11 @@ foreach ($zipFile in $zipFiles) {
     # Use the [System.IO.Path] class to remove the extension
     $filenameWithoutExtension = [System.IO.Path]::ChangeExtension($filenameWithExtension, $null)
 
-    # Print the filename without the extension
-    Write-Host "Filename without extension: $filenameWithoutExtension"
-
     # Remove the dot from the filename
     $filenameWithoutExtension = $filenameWithoutExtension.Replace(".", "")
+
+    # Print the filename without the extension
+    Write-Host "Filename without extension: $filenameWithoutExtension"
 
     $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name="+$filenameWithoutExtension -Method 'POST' -Headers $headers -Body $body
     $response | ConvertTo-Json
