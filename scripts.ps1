@@ -42,34 +42,34 @@ $zipFilePath = "esi-apigee-x-394004-proxy-FLSessionPreFilter-rev5.zip"
 # # Download the ZIP file from GitHub
 # Invoke-WebRequest -Uri $githubApiUrl -Headers $githubHeaders -OutFile $zipFilePath
 
-# Check if the ZIP file download was successful
-if (Test-Path -Path $zipFilePath) {
-    Write-Host "ZIP file downloaded successfully from GitHub."
+# # Check if the ZIP file download was successful
+# if (Test-Path -Path $zipFilePath) {
+#     Write-Host "ZIP file downloaded successfully from GitHub."
 
-    # Define the Apigee X API endpoint to upload the ZIP file
-    $apigeeApiUrl = "https://apigee.googleapis.com/v1/organizations/$orgName/"
+#     # Define the Apigee X API endpoint to upload the ZIP file
+#     $apigeeApiUrl = "https://apigee.googleapis.com/v1/organizations/$orgName/"
 
-    # Create headers with the Apigee X API key and Content-Type
-    $apigeeHeaders = @{
-        "x-api-key" = "Bearer $token"
-        "Content-Type" = "application/octet-stream"
-    }
+#     # Create headers with the Apigee X API key and Content-Type
+#     $apigeeHeaders = @{
+#         "x-api-key" = "Bearer $token"
+#         "Content-Type" = "application/octet-stream"
+#     }
 
-    # Read the contents of the ZIP file
-    $zipFileContent = [System.IO.File]::ReadAllBytes($zipFilePath)
+#     # Read the contents of the ZIP file
+#     $zipFileContent = [System.IO.File]::ReadAllBytes($zipFilePath)
 
-    # Send a POST request to upload the ZIP file to Apigee X
-    $apigeeResponse = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name=$zipFilePath&action=import" -Method 'POST' -Headers $apigeeHeaders -Body $zipFileContent
+#     # Send a POST request to upload the ZIP file to Apigee X
+#     $apigeeResponse = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name=$zipFilePath&action=import" -Method 'POST' -Headers $apigeeHeaders -Body $zipFileContent
 
-    # Check if the ZIP file upload was successful
-    if ($apigeeResponse -ne $null) {
-        Write-Host "ZIP file uploaded successfully to Apigee X."
-    } else {
-        Write-Host "Failed to upload the ZIP file to Apigee X."
-    }
-} else {
-    Write-Host "Failed to download the ZIP file from GitHub."
-}
+#     # Check if the ZIP file upload was successful
+#     if ($apigeeResponse -ne $null) {
+#         Write-Host "ZIP file uploaded successfully to Apigee X."
+#     } else {
+#         Write-Host "Failed to upload the ZIP file to Apigee X."
+#     }
+# } else {
+#     Write-Host "Failed to download the ZIP file from GitHub."
+# }
 
 # ------------------POSTMAN------------------------------------
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
