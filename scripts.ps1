@@ -23,6 +23,7 @@ $githubHeaders = @{
     Authorization = "Bearer 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"
     # "User-Agent" = "PowerShell-GitHub-Downloader"
     "USER_AGENT" = "github-proxies-X ($repositoryName)"
+    "Accept": "application/vnd.github+json"
 }
 
 
