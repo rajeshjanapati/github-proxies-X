@@ -15,31 +15,31 @@ $orgName = "esi-apigee-x-394004"
 $envName = "eval"
 $apiKey = "Bearer $token"
 
-# Define the GitHub API endpoint to get the ZIP file
-$githubApiUrl = "https://api.github.com/repos/$repositoryOwner/$repositoryName/zipball/$branchName"
+# # Define the GitHub API endpoint to get the ZIP file
+# $githubApiUrl = "https://api.github.com/repos/$repositoryOwner/$repositoryName/zipball/$branchName"
 
-# Create headers with the GitHub authentication token and User-Agent
-$githubHeaders = @{
-    Authorization = "Bearer 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"
-    # "User-Agent" = "PowerShell-GitHub-Downloader"
-    "USER_AGENT" = ".github/workflows"
-    # "Accept"="application/vnd.github+json"
-}
+# # Create headers with the GitHub authentication token and User-Agent
+# $githubHeaders = @{
+#     Authorization = "Bearer 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"
+#     # "User-Agent" = "PowerShell-GitHub-Downloader"
+#     "USER_AGENT" = ".github/workflows"
+#     # "Accept"="application/vnd.github+json"
+# }
 
 
-$rateLimitUrl = "https://api.github.com/rate_limit"
+# $rateLimitUrl = "https://api.github.com/rate_limit"
 
-$rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Method 'GET' -Headers $githubHeaders
+# $rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Method 'GET' -Headers $githubHeaders
 
-# Output the rate limit information
-Write-Host "Rate Limit: $($rateLimitResponse.resources.core.limit)"
-Write-Host "Remaining Requests: $($rateLimitResponse.resources.core.remaining)"
+# # Output the rate limit information
+# Write-Host "Rate Limit: $($rateLimitResponse.resources.core.limit)"
+# Write-Host "Remaining Requests: $($rateLimitResponse.resources.core.remaining)"
 
-# Define the path to save the downloaded ZIP file
-$zipFilePath = "downloaded.zip"
+# # Define the path to save the downloaded ZIP file
+# $zipFilePath = "downloaded.zip"
 
-# Download the ZIP file from GitHub
-Invoke-WebRequest -Uri $githubApiUrl -Headers $githubHeaders -OutFile $zipFilePath
+# # Download the ZIP file from GitHub
+# Invoke-WebRequest -Uri $githubApiUrl -Headers $githubHeaders -OutFile $zipFilePath
 
 # # Check if the ZIP file download was successful
 # if (Test-Path -Path $zipFilePath) {
@@ -69,3 +69,37 @@ Invoke-WebRequest -Uri $githubApiUrl -Headers $githubHeaders -OutFile $zipFilePa
 # } else {
 #     Write-Host "Failed to download the ZIP file from GitHub."
 # }
+
+# Set your GitHub repository information
+$owner = "rajeshjanapati@gmail.com"
+$repo = "github-proxies-X"
+$filePath = "scripts.ps1" # Path to the file you want to download
+
+# Set your GitHub token (PAT or GitHub Actions token)
+$token = "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"
+
+# Create headers with the GitHub authentication token and User-Agent
+$headers = @{
+    Authorization = "Bearer $token"
+    "User-Agent" = ".github/workflows"  # Replace with your own User-Agent
+}
+
+# Define the GitHub API URL to get the contents of the file
+$githubApiUrl = "https://api.github.com/repos/$owner/$repo/contents/$filePath"
+
+# Make an HTTP GET request to the GitHub API
+$fileContent = Invoke-RestMethod -Uri $githubApiUrl -Headers $headers
+
+# Check if the request was successful
+if ($fileContent -ne $null) {
+    # The file content is base64-encoded, so decode it
+    $decodedContent = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($fileContent.content))
+
+    # Save the file content to a local file
+    $localFilePath = "downloaded_file.ext"  # Choose a local file path and name
+    Set-Content -Path $localFilePath -Value $decodedContent -Encoding UTF8
+
+    Write-Host "File downloaded successfully to $localFilePath"
+} else {
+    Write-Host "Failed to download the file from GitHub."
+}
