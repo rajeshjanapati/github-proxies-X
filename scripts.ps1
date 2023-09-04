@@ -21,8 +21,17 @@ $githubApiUrl = "https://api.github.com/repos/$repositoryOwner/$repositoryName/z
 # Create headers with the GitHub authentication token and User-Agent
 $githubHeaders = @{
     Authorization = "Bearer $githubToken"
-    # "User-Agent" = "PowerShell-GitHub-Downloader"
+    "User-Agent" = "PowerShell-GitHub-Downloader"
 }
+
+
+$rateLimitUrl = "https://api.github.com/rate_limit"
+
+$rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Headers $githubHeaders
+
+# Output the rate limit information
+Write-Host "Rate Limit: $($rateLimitResponse.resources.core.limit)"
+Write-Host "Remaining Requests: $($rateLimitResponse.resources.core.remaining)"
 
 # Define the path to save the downloaded ZIP file
 $zipFilePath = "downloaded.zip"
