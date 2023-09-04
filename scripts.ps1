@@ -27,6 +27,25 @@ foreach ($zipFile in $zipFiles) {
 
     # Do something with the file, for example, print the file name
     Write-Host "Found .zip file: $($zipFile.Name)"
+
+    $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+    $headers.Add("Authorization", "Bearer $token")
+
+    $multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
+    $multipartFile = $zipFilePath
+    $FileStream = [System.IO.FileStream]::new($multipartFile, [System.IO.FileMode]::Open)
+    $fileHeader = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
+    $fileHeader.Name = "file"
+    $fileHeader.FileName = $zipFilePath
+    $fileContent = [System.Net.Http.StreamContent]::new($FileStream)
+    $fileContent.Headers.ContentDisposition = $fileHeader
+    $multipartContent.Add($fileContent)
+
+    $body = $multipartContent
+
+    $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name='+$zipFilePath+'&action=import' -Method 'POST' -Headers $headers -Body $body
+    $response | ConvertTo-Json
+
 }
 
 # Set your Apigee X organization and environment
