@@ -18,16 +18,20 @@ $apiKey = "Bearer $token"
 # Define the GitHub API endpoint to get the ZIP file
 $githubApiUrl = "https://api.github.com/repos/$repositoryOwner/$repositoryName/zipball/$branchName"
 
-# Create headers with the GitHub authentication token and User-Agent
-$githubHeaders = @{
-    Authorization = "Bearer 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"
-    "User-Agent" = "PowerShell-GitHub-Downloader"
-}
+# # Create headers with the GitHub authentication token and User-Agent
+# $githubHeaders = @{
+#     Authorization = "Bearer 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"
+#     "User-Agent" = "PowerShell-GitHub-Downloader"
+# }
+
+$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+$headers.Add("Authorization", "Bearer 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")
+$headers.Add("Content-Type", "application/json")
 
 
 $rateLimitUrl = "https://api.github.com/rate_limit"
 
-$rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Method 'GET' -Headers $githubHeaders
+$rateLimitResponse = Invoke-RestMethod -Uri $rateLimitUrl -Method 'GET' -Headers $headers
 
 # Output the rate limit information
 Write-Host "Rate Limit: $($rateLimitResponse.resources.core.limit)"
