@@ -76,11 +76,11 @@ $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Authorization", "Bearer $token")
 
 $multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
-$multipartFile = 'esi-apigee-x-394004-proxy-FLSessionPreFilter-rev5.zip'
+$multipartFile = $zipFilePath
 $FileStream = [System.IO.FileStream]::new($multipartFile, [System.IO.FileMode]::Open)
 $fileHeader = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
 $fileHeader.Name = "file"
-$fileHeader.FileName = "esi-apigee-x-394004-proxy-FLSessionPreFilter-rev5.zip"
+$fileHeader.FileName = $zipFilePath
 $fileContent = [System.Net.Http.StreamContent]::new($FileStream)
 $fileContent.Headers.ContentDisposition = $fileHeader
 $multipartContent.Add($fileContent)
