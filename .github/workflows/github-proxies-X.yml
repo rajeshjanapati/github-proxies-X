@@ -72,7 +72,18 @@ jobs:
 
           service_account: 'workload-identity-federation@esi-apigee-x-394004.iam.gserviceaccount.com'
 
-  
+      - name: Download Files
+        run: |
+          # PowerShell script to download files
+          Invoke-Pester ./scripts.ps1 -Passthru
+        env:
+          git-token: ${{ secrets.TOKEN }}
+          ORG: "${{ secrets.APIGEE_ORG }}"
+          TOKEN: "${{ steps.auth.outputs.access_token }}"
+        headers:
+          Authorization: "Bearer ${{ secrets.TOKEN }}"
+          "User-Agent": ".github/workflows/github-proxies-X.yml/1.0"
+
 
       - name: Perform Apigee Export
 
