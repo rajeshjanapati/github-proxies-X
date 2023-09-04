@@ -88,7 +88,7 @@ $headers = @{
 $githubApiUrl = "https://api.github.com/repos/$owner/$repo/contents/$filePath"
 
 # Make an HTTP GET request to the GitHub API
-$fileContent = Invoke-RestMethod -Uri $githubApiUrl -Headers $headers
+$fileContent = Invoke-RestMethod -Uri $githubApiUrl -Method 'GET' -Headers $headers
 
 # Check if the request was successful
 if ($fileContent -ne $null) {
