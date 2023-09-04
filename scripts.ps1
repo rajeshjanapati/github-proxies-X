@@ -15,22 +15,22 @@ $orgName = "esi-apigee-x-394004"
 $envName = "eval"
 $apiKey = "Bearer $token"
 
-# Clone the repository
-git clone https://github.com/rajeshjanapati/apigee-artifacts.git
-# cd $repositoryName
-cd apigee/artifacts-nonprod/proxies
+# # Clone the repository
+# git clone https://github.com/rajeshjanapati/apigee-artifacts.git
+# # cd $repositoryName
+# cd apigee/artifacts-nonprod/proxies
 
-# Read JSON files
-$jsonFiles = Get-ChildItem -Filter *.json -Recurse
+# # Read JSON files
+# $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 
-$jsonContent = Get-Content -Path $jsonFile -Raw
-# Parse the JSON content
-$jsonData = ConvertFrom-Json $jsonContent
+# $jsonContent = Get-Content -Path $jsonFile -Raw
+# # Parse the JSON content
+# $jsonData = ConvertFrom-Json $jsonContent
 
-# Extract the value of the "name" key from the JSON data
-$proxyName = $jsonData.name
+# # Extract the value of the "name" key from the JSON data
+# $proxyName = $jsonData.name
 
-Write-Host "Proxy-Name: $proxyName"
+# Write-Host "Proxy-Name: $proxyName"
 
 # Define the list of GitHub file URLs to download
 $githubFileUrls = @(
