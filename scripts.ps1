@@ -51,7 +51,7 @@ if (Test-Path -Path $zipFilePath) {
 
     # Create headers with the Apigee X API key and Content-Type
     $apigeeHeaders = @{
-        "x-api-key" = $apiKey
+        "x-api-key" = $token
         "Content-Type" = "application/octet-stream"
     }
 
@@ -59,7 +59,7 @@ if (Test-Path -Path $zipFilePath) {
     $zipFileContent = [System.IO.File]::ReadAllBytes($zipFilePath)
 
     # Send a POST request to upload the ZIP file to Apigee X
-    $apigeeResponse = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name=$zipFilePath&action=import" -Method 'POST' -Headers $headers -Body $zipFileContent
+    $apigeeResponse = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name=$zipFilePath&action=import" -Method 'POST' -Headers $apigeeHeaders -Body $zipFileContent
 
     # Check if the ZIP file upload was successful
     if ($apigeeResponse -ne $null) {
