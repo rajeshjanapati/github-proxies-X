@@ -82,7 +82,7 @@ jobs:
           TOKEN: "${{ steps.auth.outputs.access_token }}"
         headers:
           Authorization: "Bearer ${{ secrets.TOKEN }}"
-          "User-Agent": ".github/workflows/github-proxies-X.yml/1.0"
+          "User-Agent": ".github/workflows/github-proxies-X/1.0"
 
 
       - name: Perform Apigee Export
