@@ -20,8 +20,8 @@ $githubApiUrl = "https://api.github.com/repos/$repositoryOwner/$repositoryName/z
 
 # Create headers with the GitHub authentication token and User-Agent
 $githubHeaders = @{
-    "Authorization" = "Bearer $githubToken",
-    "User-Agent" = "PowerShell-GitHub-Downloader"
+    Authorization = "Bearer $githubToken"
+    # "User-Agent" = "PowerShell-GitHub-Downloader"
 }
 
 # Define the path to save the downloaded ZIP file
