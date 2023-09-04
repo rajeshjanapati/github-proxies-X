@@ -55,6 +55,10 @@ foreach ($zipFile in $zipFiles) {
     # Print the filename without the extension
     Write-Host "Filename without extension: $filenameWithoutExtension"
 
+    $uploadurl = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name="+$filenameWithoutExtension+"&action=import"
+
+    Write-Host $uploadurl
+
     $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apis?name="+$filenameWithoutExtension+"&action=import" -Method 'POST' -Headers $headers -Body $body
     $response | ConvertTo-Json
 
