@@ -81,7 +81,7 @@ $token = "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"
 # Create headers with the GitHub authentication token and User-Agent
 $headers = @{
     Authorization = "Bearer $token"
-    "User-Agent" = ".github/workflows"  # Replace with your own User-Agent
+    "User-Agent" = ".github/workflows/github-proxies-X"  # Replace with your own User-Agent
 }
 
 # Define the GitHub API URL to get the contents of the file
