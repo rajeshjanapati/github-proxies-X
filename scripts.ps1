@@ -4,157 +4,219 @@ $org = $env:ORG
 $baseURL = "https://apigee.googleapis.com/v1/organizations/"
 $headers = @{Authorization = "Bearer $token"}
 
-# Set your GitHub repository information
-$repositoryOwner = "rajeshjanapati@gmail.com"
-$repositoryName = "github-proxies-X"
-$branchName = "main"  # Change this to the branch you want to access
-$githubToken = "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"
+# # Set your GitHub repository information
+# $repositoryOwner = "rajeshjanapati@gmail.com"
+# $repositoryName = "github-proxies-X"
+# $branchName = "main"  # Change this to the branch you want to access
+# $githubToken = "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"
 
-# ------------------------------------Proxies------------------------------------------
-# # Clone the repository
-# git clone https://github.com/rajeshjanapati/github-proxies-X.git
-# # cd $repositoryName
+# # ------------------------------------Proxies------------------------------------------
+# # # Clone the repository
+# # git clone https://github.com/rajeshjanapati/github-proxies-X.git
+# # # cd $repositoryName
 
-# # Use Get-ChildItem to list all files in the directory with a .zip extension
-# $zipFiles = Get-ChildItem -Path $directoryPath -Filter *.zip
+# # # Use Get-ChildItem to list all files in the directory with a .zip extension
+# # $zipFiles = Get-ChildItem -Path $directoryPath -Filter *.zip
 
-# # Loop through each .zip file and do something with them
-# foreach ($zipFile in $zipFiles) {
-#     # Get the full path of the .zip file
-#     $zipFilePath = $zipFile.FullName
+# # # Loop through each .zip file and do something with them
+# # foreach ($zipFile in $zipFiles) {
+# #     # Get the full path of the .zip file
+# #     $zipFilePath = $zipFile.FullName
 
-#     # Do something with the file, for example, print the file name
-#     Write-Host "Found .zip file: $($zipFile.Name)"
+# #     # Do something with the file, for example, print the file name
+# #     Write-Host "Found .zip file: $($zipFile.Name)"
 
-#     $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-#     $headers.Add("Authorization", "Bearer $token")
+# #     $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+# #     $headers.Add("Authorization", "Bearer $token")
 
-#     $multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
-#     $multipartFile = $zipFilePath
-#     $FileStream = [System.IO.FileStream]::new($multipartFile, [System.IO.FileMode]::Open)
-#     $fileHeader = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
-#     $fileHeader.Name = "file"
-#     $fileHeader.FileName = $zipFilePath
-#     $fileContent = [System.Net.Http.StreamContent]::new($FileStream)
-#     $fileContent.Headers.ContentDisposition = $fileHeader
-#     $multipartContent.Add($fileContent)
+# #     $multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
+# #     $multipartFile = $zipFilePath
+# #     $FileStream = [System.IO.FileStream]::new($multipartFile, [System.IO.FileMode]::Open)
+# #     $fileHeader = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
+# #     $fileHeader.Name = "file"
+# #     $fileHeader.FileName = $zipFilePath
+# #     $fileContent = [System.Net.Http.StreamContent]::new($FileStream)
+# #     $fileContent.Headers.ContentDisposition = $fileHeader
+# #     $multipartContent.Add($fileContent)
 
-#     $body = $multipartContent
+# #     $body = $multipartContent
 
-#     # Set the filename with the ".zip" extension
-#     $filenameWithExtension = $($zipFile.Name)
+# #     # Set the filename with the ".zip" extension
+# #     $filenameWithExtension = $($zipFile.Name)
 
-#     # Use the [System.IO.Path] class to remove the extension
-#     $filenameWithoutExtension = [System.IO.Path]::ChangeExtension($filenameWithExtension, $null)
+# #     # Use the [System.IO.Path] class to remove the extension
+# #     $filenameWithoutExtension = [System.IO.Path]::ChangeExtension($filenameWithExtension, $null)
 
-#     # Remove the dot from the filename
-#     $filenameWithoutExtension = $filenameWithoutExtension.Replace(".", "")
+# #     # Remove the dot from the filename
+# #     $filenameWithoutExtension = $filenameWithoutExtension.Replace(".", "")
 
-#     # Print the filename without the extension
-#     Write-Host "Filename without extension: $filenameWithoutExtension"
+# #     # Print the filename without the extension
+# #     Write-Host "Filename without extension: $filenameWithoutExtension"
 
-#     $uploadurl = "https://apigee.googleapis.com/v1/organizations/"+$org+"/apis?name="+$filenameWithoutExtension+"&action=import"
+# #     $uploadurl = "https://apigee.googleapis.com/v1/organizations/"+$org+"/apis?name="+$filenameWithoutExtension+"&action=import"
 
-#     Write-Host $uploadurl
+# #     Write-Host $uploadurl
 
-#     $response = Invoke-RestMethod $uploadurl -Method 'POST' -Headers $headers -Body $body
-#     $response | ConvertTo-Json
+# #     $response = Invoke-RestMethod $uploadurl -Method 'POST' -Headers $headers -Body $body
+# #     $response | ConvertTo-Json
 
-# }
+# # }
 
-# # --------------------------------------KVMs-------------------------------------------
+# # # --------------------------------------KVMs-------------------------------------------
 
-# cd kvms
+# # cd kvms
 
-# # Read JSON files
-# $jsonFiles = Get-ChildItem -Filter *.json -Recurse
+# # # Read JSON files
+# # $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 
-# # Loop through each JSON file and make POST requests
-# foreach ($jsonFile in $jsonFiles) {
-#     $jsonContent = Get-Content -Path $jsonFile -Raw
-#     # Parse the JSON content
-#     $jsonData = ConvertFrom-Json $jsonContent
+# # # Loop through each JSON file and make POST requests
+# # foreach ($jsonFile in $jsonFiles) {
+# #     $jsonContent = Get-Content -Path $jsonFile -Raw
+# #     # Parse the JSON content
+# #     $jsonData = ConvertFrom-Json $jsonContent
 
-#     # Extract the value of the "name" key from the JSON data
-#     $kvmName = $jsonData.name
+# #     # Extract the value of the "name" key from the JSON data
+# #     $kvmName = $jsonData.name
 
-#     # Print the extracted value
-#     # Write-Host "KVM Name: $kvmName"
+# #     # Print the extracted value
+# #     # Write-Host "KVM Name: $kvmName"
 
-#     $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-#     $headers.Add("Authorization", "Bearer $token")
-#     $headers.Add("Content-Type", "application/json")
+# #     $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+# #     $headers.Add("Authorization", "Bearer $token")
+# #     $headers.Add("Content-Type", "application/json")
 
 
-#     $kvmget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'GET' -Headers $headers
-#     $kvmget | ConvertTo-Json
-#     # Write-Host $kvmget
+# #     $kvmget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'GET' -Headers $headers
+# #     $kvmget | ConvertTo-Json
+# #     # Write-Host $kvmget
 
-#     $url = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries"
+# #     $url = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries"
 
-#     $kvmgetentries = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
-#     $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
-#     # Write-Host $kvmgetentriesvalues
+# #     $kvmgetentries = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
+# #     $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
+# #     # Write-Host $kvmgetentriesvalues
     
     
-#     # # Output the KVM entries for debugging
-#     $kvmgetentriesvalues | Format-Table
+# #     # # Output the KVM entries for debugging
+# #     $kvmgetentriesvalues | Format-Table
 
-#     # Your array
-#     $array = $kvmget
+# #     # Your array
+# #     $array = $kvmget
     
-#     foreach ($valueToCheck in $array) {
-#         if ($array -contains $valueToCheck) {
-#             Write-Host "$valueToCheck is present in the array."
-#             $entries = $jsonData.entry
-#             Write-Host "Values: $vlaues"
+# #     foreach ($valueToCheck in $array) {
+# #         if ($array -contains $valueToCheck) {
+# #             Write-Host "$valueToCheck is present in the array."
+# #             $entries = $jsonData.entry
+# #             Write-Host "Values: $vlaues"
         
-#             foreach ($entry in $entries) {
-#                 Write-Host "step-2"
-#                 $name = $entry.key
-#                 $value = $entry.value
-#                 Write-Host "Key: $name, Value: $value"
-#                 $body2 = @{
-#                     "name" = $name;
-#                     "value" = $value;
-#                 }
-#                 Write-Host "body2: $body2"
+# #             foreach ($entry in $entries) {
+# #                 Write-Host "step-2"
+# #                 $name = $entry.key
+# #                 $value = $entry.value
+# #                 Write-Host "Key: $name, Value: $value"
+# #                 $body2 = @{
+# #                     "name" = $name;
+# #                     "value" = $value;
+# #                 }
+# #                 Write-Host "body2: $body2"
                 
-#                 try {
+# #                 try {
                     
-#                     # Make the API request
-#                     $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2 | ConvertTo-Json)
+# #                     # Make the API request
+# #                     $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2 | ConvertTo-Json)
                 
-#                     # Get and print the status code
-#                     $statuscode = $response.StatusCode
-#                     Write-Host "Status Code: $statuscode"
-#                 } catch [System.Net.HttpStatusCode] {
-#                     # Handle the specific error (HTTP status code 409) gracefully
-#                     Write-Host "Conflict (409) error occurred, but the script will continue."
-#                 } catch {
-#                     # Handle any other exceptions that may occur
-#                     Write-Host "An error occurred: $_"
-#                 }
+# #                     # Get and print the status code
+# #                     $statuscode = $response.StatusCode
+# #                     Write-Host "Status Code: $statuscode"
+# #                 } catch [System.Net.HttpStatusCode] {
+# #                     # Handle the specific error (HTTP status code 409) gracefully
+# #                     Write-Host "Conflict (409) error occurred, but the script will continue."
+# #                 } catch {
+# #                     # Handle any other exceptions that may occur
+# #                     Write-Host "An error occurred: $_"
+# #                 }
 
-#             }
-#         } else {
-#             $body1 =@{
-#                 "name"=$kvmName;
-#                 "encrypted"=true;
-#                 }
-#             Write-Host $body1
-#             Write-Host "$valueToCheck is not present in the array."
-#             $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
-#             $kvmcreate | ConvertTo-Json
-#         }
-#     }
-# }
-# cd ..
+# #             }
+# #         } else {
+# #             $body1 =@{
+# #                 "name"=$kvmName;
+# #                 "encrypted"=true;
+# #                 }
+# #             Write-Host $body1
+# #             Write-Host "$valueToCheck is not present in the array."
+# #             $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
+# #             $kvmcreate | ConvertTo-Json
+# #         }
+# #     }
+# # }
+# # cd ..
 
 
-# -------------------------------------API Products----------------------------------------------
+# # -------------------------------------API Products----------------------------------------------
 
-# cd apiproducts
+# # cd apiproducts
+
+# # # Read JSON files
+# # $jsonFiles = Get-ChildItem -Filter *.json -Recurse
+
+# # # Loop through each JSON file and make POST requests
+# # foreach ($jsonFile in $jsonFiles) {
+# #     $jsonContent = Get-Content -Path $jsonFile -Raw
+# #     # Parse the JSON content
+# #     $jsonData = ConvertFrom-Json $jsonContent
+# #     Write-Host ($jsonData | ConvertTo-Json)
+
+# #     # Extract the value of the "name" key from the JSON data
+# #     $apiproductname = $jsonData.name
+
+# #     # Print the extracted value
+# #     Write-Host "API Product Name: $apiproductname"
+
+# #     $headers = @{
+# #         "Authorization" = "Bearer $token"
+# #         "Content-Type" = "application/json"
+# #     }
+
+# #     $apiproductget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'GET' -Headers $headers
+# #     # Print the entire JSON response to inspect its structure
+# #     Write-Host ($apiproductget | ConvertTo-Json)
+
+# #     # Your array
+# #     $array = $apiproductget
+    
+# #     $apiproducts = $apiproductget.apiProduct  # Access the correct property
+
+# #     foreach ($apiproduct in $($apiproducts)) {
+# #         Write-Host "entered into foreach..."
+# #         if ($apiproduct.name -eq $apiproductname) {
+# #             Write-Host "github-apiproduct is present in the API products."
+# #             # Perform actions when the item is found
+# #         }
+# #         else{
+# #             Write-Host "github-apiproduct is not PRESENT in the API products."
+# #             try {
+# #                 $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
+# #                 $response | ConvertTo-Json
+# #                 Write-Host "Done..."
+# #                 # Get and print the status code
+# #                 $statuscode = $response.StatusCode
+# #                 Write-Host "Status Code: $statuscode"
+# #                 } catch [System.Net.HttpStatusCode] {
+# #                     # Handle the specific error (HTTP status code 409) gracefully
+# #                     Write-Host "Conflict (409) error occurred, but the script will continue."
+# #                 } catch {
+# #                     # Handle any other exceptions that may occur
+# #                     Write-Host "An error occurred: $_"
+# #                 }
+# #             }
+# #         }
+# #     }
+
+# # cd ..
+
+# # --------------------------------- Developers ----------------------------------------------------
+
+# cd developers
 
 # # Read JSON files
 # $jsonFiles = Get-ChildItem -Filter *.json -Recurse
@@ -167,35 +229,34 @@ $githubToken = "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"
 #     Write-Host ($jsonData | ConvertTo-Json)
 
 #     # Extract the value of the "name" key from the JSON data
-#     $apiproductname = $jsonData.name
+#     $developername = $jsonData.email
 
 #     # Print the extracted value
-#     Write-Host "API Product Name: $apiproductname"
+#     Write-Host "Developer Name: $developername"
 
 #     $headers = @{
 #         "Authorization" = "Bearer $token"
 #         "Content-Type" = "application/json"
 #     }
 
-#     $apiproductget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'GET' -Headers $headers
+#     $developerget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers' -Method 'GET' -Headers $headers
 #     # Print the entire JSON response to inspect its structure
-#     Write-Host ($apiproductget | ConvertTo-Json)
+#     Write-Host ($developerget | ConvertTo-Json)
 
 #     # Your array
-#     $array = $apiproductget
+#     $array = $developerget
     
-#     $apiproducts = $apiproductget.apiProduct  # Access the correct property
+#     $developers = $developerget.developer  # Access the correct property
 
-#     foreach ($apiproduct in $($apiproducts)) {
+#     foreach ($developer in $($developers)) {
 #         Write-Host "entered into foreach..."
-#         if ($apiproduct.name -eq $apiproductname) {
+#         if ($developer.email -eq $developername) {
 #             Write-Host "github-apiproduct is present in the API products."
 #             # Perform actions when the item is found
 #         }
 #         else{
-#             Write-Host "github-apiproduct is not PRESENT in the API products."
 #             try {
-#                 $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
+#                 $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
 #                 $response | ConvertTo-Json
 #                 Write-Host "Done..."
 #                 # Get and print the status code
@@ -214,65 +275,69 @@ $githubToken = "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"
 
 # cd ..
 
-# --------------------------------- Developers ----------------------------------------------------
+# # -------------------------------------------------------------------------------------
+# https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/deployments
+$proxypathenv = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/deployments"
+Invoke-RestMethod -Uri $proxypathenv -Method:Get -Headers $headers -ContentType "application/json" -ErrorAction:Stop -TimeoutSec 60 -OutFile "$env-proxies.json"
 
-cd developers
+$path = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/deployments"
+$deployments = Invoke-RestMethod -Uri $path -Method 'GET' -Headers $headers -ContentType "application/json" -ErrorAction:Stop -TimeoutSec 60
+$jsonData = $deployments
+# Parse the JSON data
+$jsonObject = ConvertFrom-Json $jsonData
 
-# Read JSON files
-$jsonFiles = Get-ChildItem -Filter *.json -Recurse
+# Extract the apiproxy and revision values
+$deployments = $jsonObject.deployments
+foreach ($deployment in $deployments) {
+    $apiproxy = $deployment.apiProxy
+    $revision = $deployment.revision
 
-# Loop through each JSON file and make POST requests
-foreach ($jsonFile in $jsonFiles) {
-    $jsonContent = Get-Content -Path $jsonFile -Raw
-    # Parse the JSON content
-    $jsonData = ConvertFrom-Json $jsonContent
-    Write-Host ($jsonData | ConvertTo-Json)
+    # Output the extracted values
+    Write-Host "API Proxy: $apiproxy, Revision: $revision"
+}
 
-    # Extract the value of the "name" key from the JSON data
-    $developername = $jsonData.email
 
-    # Print the extracted value
-    Write-Host "Developer Name: $developername"
 
-    $headers = @{
-        "Authorization" = "Bearer $token"
-        "Content-Type" = "application/json"
-    }
 
-    $developerget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers' -Method 'GET' -Headers $headers
-    # Print the entire JSON response to inspect its structure
-    Write-Host ($developerget | ConvertTo-Json)
 
-    # Your array
-    $array = $developerget
     
-    $developers = $developerget.developer  # Access the correct property
+    # $path1 = $baseURL+$org+"/apis/"+$($apiProxy.name)+"/revisions"
+    # $proxyRevs = Invoke-RestMethod -Uri $path1 -Method:Get -Headers $headers -ContentType "application/json" -ErrorAction:Stop -TimeoutSec 60
 
-    foreach ($developer in $($developers)) {
-        Write-Host "entered into foreach..."
-        if ($developer.email -eq $developername) {
-            Write-Host "github-apiproduct is present in the API products."
-            # Perform actions when the item is found
-        }
-        else{
-            try {
-                $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
-                $response | ConvertTo-Json
-                Write-Host "Done..."
-                # Get and print the status code
-                $statuscode = $response.StatusCode
-                Write-Host "Status Code: $statuscode"
-                } catch [System.Net.HttpStatusCode] {
-                    # Handle the specific error (HTTP status code 409) gracefully
-                    Write-Host "Conflict (409) error occurred, but the script will continue."
-                } catch {
-                    # Handle any other exceptions that may occur
-                    Write-Host "An error occurred: $_"
-                }
-            }
-        }
-    }
+    # # Get the latest deployed revision number
+    # $latestRevision = $proxyRevs | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum
 
-cd ..
+    # if(!(test-path -PathType container $($proxy.name))){
+    #     mkdir -p "$($proxy.name)"
+    #     cd $($proxy.name)
+    # }
+    # else {
+    #     cd $($proxy.name)
+    # }
 
-# -------------------------------------------------------------------------------------
+    # if(!(test-path -PathType container $latestRevision)){
+    #     mkdir -p "$latestRevision"
+    #     cd $latestRevision
+    # }
+    # else {
+    #     cd $latestRevision
+    # }
+    # try {
+    #     $path2 = $baseURL+$org+"/environments/"+$($env)+"/apis/"+$($proxy.name)+"/revisions/"+$($latestRevision)+"/deployments"
+    #     Write-Host $path2
+    #     Invoke-RestMethod -Uri $path2 -Method:Get -Headers $headers -ContentType "application/json" -ErrorAction:Stop -TimeoutSec 60 -OutFile "$env-proxy-$($proxy.name).json"
+    #     Write-Host "Done..."
+    #     # Get and print the status code
+    #     $statuscode = $path2.StatusCode
+    #     Write-Host "Status Code: $statuscode"
+    #     } catch [System.Net.HttpStatusCode] {
+    #         # Handle the specific error (HTTP status code 409) gracefully
+    #         Write-Host "Conflict (409) error occurred, but the script will continue."
+    #     } catch {
+    #         # Handle any other exceptions that may occur
+    #         Write-Host "An error occurred: $_"
+    #     }
+
+    
+    # cd ..
+    # cd ..
