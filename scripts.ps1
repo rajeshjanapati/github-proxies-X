@@ -183,15 +183,12 @@ foreach ($jsonFile in $jsonFiles) {
     # Your array
     $array = $apiproductget
     
-    $apiproducts = $apiproductget.items  # Access the 'items' property in the response
+    $apiproducts = $apiproductget.apiProduct  # Access the correct property
 
     foreach ($valueToCheck in $apiproducts) {
-        if ($valueToCheck.Name -eq $apiproductname) {
-            Write-Host "$apiproductname is present in the API products."
+        if ($valueToCheck.name -eq "github-apiproduct") {
+            Write-Host "github-apiproduct is present in the API products."
             # Perform actions when the item is found
-        }
-        else{
-            Write-Host "$apiproductname is not present in the API products."
         }
     }
 }
