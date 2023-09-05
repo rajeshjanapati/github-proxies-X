@@ -211,7 +211,6 @@ foreach ($jsonFile in $jsonFiles) {
             }
         }
     }
-}
 
 cd ..
 
