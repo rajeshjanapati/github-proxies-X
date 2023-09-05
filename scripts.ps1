@@ -275,40 +275,63 @@ $githubToken = "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"
 
 # cd ..
 
-# # -------------------------------------------------------------------------------------
+# # ------------------------------deployed proxies latest revision-------------------------------------------------------
 # https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/deployments
-$proxypathenv = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/deployments"
-Invoke-RestMethod -Uri $proxypathenv -Method Get -Headers $headers -ContentType "application/json" -ErrorAction Stop -TimeoutSec 60 -OutFile "$env-proxies.json"
+# $proxypathenv = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/deployments"
+# Invoke-RestMethod -Uri $proxypathenv -Method Get -Headers $headers -ContentType "application/json" -ErrorAction Stop -TimeoutSec 60 -OutFile "$env-proxies.json"
 
-# Load the JSON data from the file
-$jsonData = Get-Content -Path "$env-proxies.json" | ConvertFrom-Json
+# # Load the JSON data from the file
+# $jsonData = Get-Content -Path "$env-proxies.json" | ConvertFrom-Json
 
-# Extract the apiproxy and revision values
-$deployments = $jsonData.deployments
-foreach ($deployment in $deployments) {
-    $apiproxy = $deployment.apiProxy
-    $revision = $deployment.revision
-    if(!(test-path -PathType container $($proxy.name))){
-        mkdir -p "$apiproxy"
-        cd $apiproxy
-    }
-    else {
-        cd $apiproxy
-    }
+# # Extract the apiproxy and revision values
+# $deployments = $jsonData.deployments
+# foreach ($deployment in $deployments) {
+#     $apiproxy = $deployment.apiProxy
+#     $revision = $deployment.revision
+#     if(!(test-path -PathType container $($proxy.name))){
+#         mkdir -p "$apiproxy"
+#         cd $apiproxy
+#     }
+#     else {
+#         cd $apiproxy
+#     }
 
-    if(!(test-path -PathType container $latestRevision)){
-        mkdir -p "$latestRevision"
-        cd $latestRevision
-    }
-    else {
-        cd $latestRevision
-    }
+#     if(!(test-path -PathType container $latestRevision)){
+#         mkdir -p "$latestRevision"
+#         cd $latestRevision
+#     }
+#     else {
+#         cd $latestRevision
+#     }
 
-    # Output the extracted values
-    Write-Host "API Proxy: $apiproxy, Revision: $revision"
-    $path2 = $baseURL+$org+"/environments/"+$($env)+"/apis/"+$apiproxy+"/revisions/"+$revision+"/deployments"
-    Write-Host $path2
-    Invoke-RestMethod -Uri $path2 -Method:Get -Headers $headers -ContentType "application/json" -ErrorAction:Stop -TimeoutSec 60 -OutFile "$env-proxy-$($proxy.name).json"
-    Write-Host "Done..."
+#     # Output the extracted values
+#     Write-Host "API Proxy: $apiproxy, Revision: $revision"
+#     $path2 = $baseURL+$org+"/environments/"+$($env)+"/apis/"+$apiproxy+"/revisions/"+$revision+"/deployments"
+#     Write-Host $path2
+#     Invoke-RestMethod -Uri $path2 -Method:Get -Headers $headers -ContentType "application/json" -ErrorAction:Stop -TimeoutSec 60 -OutFile "$env-proxy-$($proxy.name).json"
+#     Write-Host "Done..."
+# }
+
+# ---------------------------------------------KVM DETAILS------------------------------------------------------------
+
+# Set your organization, environment, and KVM name
+$orgName = "esi-apigee-x-394004"
+$envName = "eval"
+$kvmName = "postman-KVM"  # Replace with your KVM name
+
+
+# Create headers with the Authorization token
+$headers = @{
+    Authorization = "Bearer $token"
 }
+
+# Construct the URL
+$url = "https://apigee.googleapis.com/v1/organizations/$orgName/environments/$envName/keyvaluemaps/$kvmName"
+
+# Make the API request to get KVM details
+$response = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
+
+# Output the response (which includes KVM details and entries)
+$response | ConvertTo-Json
+
 
