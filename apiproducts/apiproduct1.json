@@ -1,6 +1,6 @@
 {
-  "name": "api-product",
-  "displayName": "api-product",
+  "name": "github-apiproduct",
+  "displayName": "github-apiproduct",
   "approvalType": "auto",
    "attributes": [
         {
@@ -16,5 +16,5 @@
     "eval"
   ],
   "proxies": 
-     "test_messageid_rev3_2023_07_05"
+     "apigee-kVM"
 }
