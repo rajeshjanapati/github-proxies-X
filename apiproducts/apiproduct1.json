@@ -1,0 +1,20 @@
+{
+  "name": "api-product",
+  "displayName": "api-product",
+  "approvalType": "auto",
+   "attributes": [
+        {
+            "name": "access",
+            "value": "public"
+        }
+    ],
+  "description": "To access all the endpoints",
+  "apiResources": [
+    "/"
+  ],
+  "environments": [
+    "eval"
+  ],
+  "proxies": 
+     "test_messageid_rev3_2023_07_05"
+}
