@@ -278,18 +278,14 @@ $githubToken = "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"
 # # -------------------------------------------------------------------------------------
 # https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/deployments
 $proxypathenv = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/deployments"
-Invoke-RestMethod -Uri $proxypathenv -Method:Get -Headers $headers -ContentType "application/json" -ErrorAction:Stop -TimeoutSec 60 -OutFile "$env-proxies.json"
+Invoke-RestMethod -Uri $proxypathenv -Method Get -Headers $headers -ContentType "application/json" -ErrorAction Stop -TimeoutSec 60 -OutFile "$env-proxies.json"
 
-$path = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/deployments"
-$deployments = Invoke-RestMethod -Uri $path -Method 'GET' -Headers $headers -ContentType "application/json" -ErrorAction:Stop -TimeoutSec 60
-$jsonData = $deployments
-# Parse the JSON data
-$jsonObject = ConvertFrom-Json $jsonData
+# Load the JSON data from the file
+$jsonData = Get-Content -Path "$env-proxies.json" | ConvertFrom-Json
 
 # Extract the apiproxy and revision values
-$deployments = $jsonObject.deployments
+$deployments = $jsonData.deployments
 foreach ($deployment in $deployments) {
-    
     $apiproxy = $deployment.apiProxy
     $revision = $deployment.revision
 
