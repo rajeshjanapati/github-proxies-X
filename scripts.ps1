@@ -185,7 +185,8 @@ foreach ($jsonFile in $jsonFiles) {
     
     $apiproducts = $apiproductget.apiProduct  # Access the correct property
 
-    foreach ($valueToCheck in $apiproducts) {
+    foreach ($apiproduct in $($apiproducts)) {
+        Write-Host "entered into foreach..."
         if ($valueToCheck.name -eq "github-apiproduct") {
             Write-Host "github-apiproduct is present in the API products."
             # Perform actions when the item is found
