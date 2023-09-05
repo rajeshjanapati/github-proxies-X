@@ -200,7 +200,7 @@ foreach ($jsonFile in $jsonFiles) {
             }
             else {
             $body1 =@{
-                $jsonData
+                $jsonContent1 = Get-Content -Path $jsonData -Raw
                 }
             Write-Host $body1
             Write-Host "$valueToCheck is not present in the array."
