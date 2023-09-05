@@ -154,7 +154,69 @@ $githubToken = "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"
 
 # -------------------------------------API Products----------------------------------------------
 
-cd apiproducts
+# cd apiproducts
+
+# # Read JSON files
+# $jsonFiles = Get-ChildItem -Filter *.json -Recurse
+
+# # Loop through each JSON file and make POST requests
+# foreach ($jsonFile in $jsonFiles) {
+#     $jsonContent = Get-Content -Path $jsonFile -Raw
+#     # Parse the JSON content
+#     $jsonData = ConvertFrom-Json $jsonContent
+#     Write-Host ($jsonData | ConvertTo-Json)
+
+#     # Extract the value of the "name" key from the JSON data
+#     $apiproductname = $jsonData.name
+
+#     # Print the extracted value
+#     Write-Host "API Product Name: $apiproductname"
+
+#     $headers = @{
+#         "Authorization" = "Bearer $token"
+#         "Content-Type" = "application/json"
+#     }
+
+#     $apiproductget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'GET' -Headers $headers
+#     # Print the entire JSON response to inspect its structure
+#     Write-Host ($apiproductget | ConvertTo-Json)
+
+#     # Your array
+#     $array = $apiproductget
+    
+#     $apiproducts = $apiproductget.apiProduct  # Access the correct property
+
+#     foreach ($apiproduct in $($apiproducts)) {
+#         Write-Host "entered into foreach..."
+#         if ($apiproduct.name -eq $apiproductname) {
+#             Write-Host "github-apiproduct is present in the API products."
+#             # Perform actions when the item is found
+#         }
+#         else{
+#             Write-Host "github-apiproduct is not PRESENT in the API products."
+#             try {
+#                 $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
+#                 $response | ConvertTo-Json
+#                 Write-Host "Done..."
+#                 # Get and print the status code
+#                 $statuscode = $response.StatusCode
+#                 Write-Host "Status Code: $statuscode"
+#                 } catch [System.Net.HttpStatusCode] {
+#                     # Handle the specific error (HTTP status code 409) gracefully
+#                     Write-Host "Conflict (409) error occurred, but the script will continue."
+#                 } catch {
+#                     # Handle any other exceptions that may occur
+#                     Write-Host "An error occurred: $_"
+#                 }
+#             }
+#         }
+#     }
+
+# cd ..
+
+# --------------------------------- Developers ----------------------------------------------------
+
+cd developers
 
 # Read JSON files
 $jsonFiles = Get-ChildItem -Filter *.json -Recurse
@@ -167,47 +229,47 @@ foreach ($jsonFile in $jsonFiles) {
     Write-Host ($jsonData | ConvertTo-Json)
 
     # Extract the value of the "name" key from the JSON data
-    $apiproductname = $jsonData.name
+    $developername = $jsonData.email
 
     # Print the extracted value
-    Write-Host "API Product Name: $apiproductname"
+    Write-Host "Developer Name: $developername"
 
     $headers = @{
         "Authorization" = "Bearer $token"
         "Content-Type" = "application/json"
     }
 
-    $apiproductget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'GET' -Headers $headers
+    $developerget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers' -Method 'GET' -Headers $headers
     # Print the entire JSON response to inspect its structure
-    Write-Host ($apiproductget | ConvertTo-Json)
+    Write-Host ($developerget | ConvertTo-Json)
 
     # Your array
-    $array = $apiproductget
+    $array = $developerget
     
-    $apiproducts = $apiproductget.apiProduct  # Access the correct property
+    $developers = $apiproductget.apiProduct  # Access the correct property
 
-    foreach ($apiproduct in $($apiproducts)) {
+    foreach ($developer in $($developers)) {
         Write-Host "entered into foreach..."
-        if ($apiproduct.name -eq $apiproductname) {
+        if ($developer.email -eq $developername) {
             Write-Host "github-apiproduct is present in the API products."
             # Perform actions when the item is found
         }
         else{
-            Write-Host "github-apiproduct is not PRESENT in the API products."
-            try {
-                $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
-                $response | ConvertTo-Json
-                Write-Host "Done..."
-                # Get and print the status code
-                $statuscode = $response.StatusCode
-                Write-Host "Status Code: $statuscode"
-                } catch [System.Net.HttpStatusCode] {
-                    # Handle the specific error (HTTP status code 409) gracefully
-                    Write-Host "Conflict (409) error occurred, but the script will continue."
-                } catch {
-                    # Handle any other exceptions that may occur
-                    Write-Host "An error occurred: $_"
-                }
+            Write-Host "developer is not PRESENT in the API products."
+            # try {
+            #     $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
+            #     $response | ConvertTo-Json
+            #     Write-Host "Done..."
+            #     # Get and print the status code
+            #     $statuscode = $response.StatusCode
+            #     Write-Host "Status Code: $statuscode"
+            #     } catch [System.Net.HttpStatusCode] {
+            #         # Handle the specific error (HTTP status code 409) gracefully
+            #         Write-Host "Conflict (409) error occurred, but the script will continue."
+            #     } catch {
+            #         # Handle any other exceptions that may occur
+            #         Write-Host "An error occurred: $_"
+            #     }
             }
         }
     }
