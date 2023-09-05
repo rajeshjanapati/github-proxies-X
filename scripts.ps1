@@ -183,14 +183,15 @@ foreach ($jsonFile in $jsonFiles) {
     # Your array
     $array = $apiproductget
     
-    foreach ($valueToCheck in $array) {
-        if ($array -contains $valueToCheck) {
-            Write-Host "$valueToCheck is present in the array."
+    $apiproducts = $apiproductget.items  # Access the 'items' property in the response
+
+    foreach ($valueToCheck in $apiproducts) {
+        if ($valueToCheck.Name -eq $apiproductname) {
+            Write-Host "$apiproductname is present in the API products."
             # Perform actions when the item is found
         }
-        else {
-            Write-Host "$valueToCheck is not present in the array."
-            # Perform actions when the item is not found
+        else{
+            Write-Host "$apiproductname is not present in the API products."
         }
     }
 }
