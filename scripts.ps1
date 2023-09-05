@@ -169,46 +169,32 @@ foreach ($jsonFile in $jsonFiles) {
     $apiproductname = $jsonData.name
 
     # Print the extracted value
-    # Write-Host "KVM Name: $kvmName"
+    Write-Host "API Product Name: $apiproductname"
 
-    $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-    $headers.Add("Authorization", "Bearer $token")
-    $headers.Add("Content-Type", "application/json")
-
+    $headers = @{
+        "Authorization" = "Bearer $token"
+        "Content-Type" = "application/json"
+    }
 
     $apiproductget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'GET' -Headers $headers
     $apiproductget | ConvertTo-Json
     Write-Host $apiproductget
 
-    # $url = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries"
-
-    # $kvmgetentries = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
-    # $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
-    # # Write-Host $kvmgetentriesvalues
-    
-    
-    # # Output the KVM entries for debugging
-    # $kvmgetentriesvalues | Format-Table
-
     # Your array
     $array = $apiproductget
     
-    foreach ($apiproductget in $($apiproductgets)) {
+    foreach ($valueToCheck in $array) {
         if ($array -contains $valueToCheck) {
             Write-Host "$valueToCheck is present in the array."
-            Write-Host "Values: $vlaues"
-            }
-            else {
-            $body1 =@{
-                $jsonContent1 = Get-Content -Path $jsonData -Raw
-                }
-            Write-Host $body1
+            # Perform actions when the item is found
+        }
+        else {
             Write-Host "$valueToCheck is not present in the array."
-            $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
-            $kvmcreate | ConvertTo-Json
+            # Perform actions when the item is not found
         }
     }
 }
+
 cd ..
 
 # -------------------------------------------------------------------------------------
