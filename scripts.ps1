@@ -164,6 +164,7 @@ foreach ($jsonFile in $jsonFiles) {
     $jsonContent = Get-Content -Path $jsonFile -Raw
     # Parse the JSON content
     $jsonData = ConvertFrom-Json $jsonContent
+    Write-Host ($jsonData | ConvertTo-Json)
 
     # Extract the value of the "name" key from the JSON data
     $apiproductname = $jsonData.name
@@ -193,6 +194,11 @@ foreach ($jsonFile in $jsonFiles) {
         }
         else{
             Write-Host "github-apiproduct is not PRESENT in the API products."
+            # $body = @{
+
+            # }
+            #     $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'POST' -Headers $headers -Body $body
+            #     $response | ConvertTo-Json
         }
     }
 }
