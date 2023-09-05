@@ -177,8 +177,8 @@ foreach ($jsonFile in $jsonFiles) {
     }
 
     $apiproductget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'GET' -Headers $headers
-    $apiproductget | ConvertTo-Json
-    Write-Host $apiproductget
+    # Print the entire JSON response to inspect its structure
+    Write-Host ($apiproductget | ConvertTo-Json)
 
     # Your array
     $array = $apiproductget
