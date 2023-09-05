@@ -194,12 +194,21 @@ foreach ($jsonFile in $jsonFiles) {
         }
         else{
             Write-Host "github-apiproduct is not PRESENT in the API products."
-            # $body = @{
-
-            # }
-            $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
-            $response | ConvertTo-Json
-            Write-Host "Done..."
+            try {
+                $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
+                $response | ConvertTo-Json
+                Write-Host "Done..."
+                # Get and print the status code
+                $statuscode = $response.StatusCode
+                Write-Host "Status Code: $statuscode"
+                } catch [System.Net.HttpStatusCode] {
+                    # Handle the specific error (HTTP status code 409) gracefully
+                    Write-Host "Conflict (409) error occurred, but the script will continue."
+                } catch {
+                    # Handle any other exceptions that may occur
+                    Write-Host "An error occurred: $_"
+                }
+            }
         }
     }
 }
