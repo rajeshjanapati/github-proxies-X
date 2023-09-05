@@ -193,7 +193,7 @@ foreach ($jsonFile in $jsonFiles) {
     # Your array
     $array = $apiproductget
     
-    foreach ($valueToCheck in $array) {
+    foreach ($apiproductget in $($apiproductgets)) {
         if ($array -contains $valueToCheck) {
             Write-Host "$valueToCheck is present in the array."
             Write-Host "Values: $vlaues"
@@ -210,6 +210,5 @@ foreach ($jsonFile in $jsonFiles) {
     }
 }
 cd ..
-
 
 # -------------------------------------------------------------------------------------
