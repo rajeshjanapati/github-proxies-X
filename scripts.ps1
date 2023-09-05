@@ -4,11 +4,11 @@ $org = $env:ORG
 $baseURL = "https://apigee.googleapis.com/v1/organizations/"
 $headers = @{Authorization = "Bearer $token"}
 
-# # Set your GitHub repository information
-# $repositoryOwner = "rajeshjanapati@gmail.com"
-# $repositoryName = "github-proxies-X"
-# $branchName = "main"  # Change this to the branch you want to access
-# $githubToken = "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"
+# Set your GitHub repository information
+$repositoryOwner = "rajeshjanapati@gmail.com"
+$repositoryName = "github-proxies-X"
+$branchName = "main"  # Change this to the branch you want to access
+$githubToken = "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"
 
 # # ------------------------------------Proxies------------------------------------------
 # # # Clone the repository
@@ -289,6 +289,7 @@ $jsonObject = ConvertFrom-Json $jsonData
 # Extract the apiproxy and revision values
 $deployments = $jsonObject.deployments
 foreach ($deployment in $deployments) {
+    
     $apiproxy = $deployment.apiProxy
     $revision = $deployment.revision
 
