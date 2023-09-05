@@ -1,0 +1,10 @@
+{
+  "entry": [
+    {
+      "key": "test153",
+      "value": "test153.com"
+    }
+  ],
+  "name": "cicd_kvm_proxy_2",
+  "encrypted": true
+}
