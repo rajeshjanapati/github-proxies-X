@@ -197,8 +197,9 @@ foreach ($jsonFile in $jsonFiles) {
             # $body = @{
 
             # }
-            #     $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'POST' -Headers $headers -Body $body
-            #     $response | ConvertTo-Json
+            $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apiproducts' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
+            $response | ConvertTo-Json
+            Write-Host "Done..."
         }
     }
 }
