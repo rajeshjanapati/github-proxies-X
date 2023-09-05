@@ -255,7 +255,6 @@ foreach ($jsonFile in $jsonFiles) {
             # Perform actions when the item is found
         }
         else{
-            Write-Host "$developer.email is not PRESENT in the API products."
             try {
                 $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
                 $response | ConvertTo-Json
