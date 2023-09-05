@@ -288,53 +288,27 @@ $deployments = $jsonData.deployments
 foreach ($deployment in $deployments) {
     $apiproxy = $deployment.apiProxy
     $revision = $deployment.revision
+    if(!(test-path -PathType container $($proxy.name))){
+        mkdir -p "$apiproxy"
+        cd $apiproxy
+    }
+    else {
+        cd $apiproxy
+    }
+
+    if(!(test-path -PathType container $latestRevision)){
+        mkdir -p "$latestRevision"
+        cd $latestRevision
+    }
+    else {
+        cd $latestRevision
+    }
 
     # Output the extracted values
     Write-Host "API Proxy: $apiproxy, Revision: $revision"
+    $path2 = $baseURL+$org+"/environments/"+$($env)+"/apis/"+$apiproxy+"/revisions/"+$revision+"/deployments"
+    Write-Host $path2
+    Invoke-RestMethod -Uri $path2 -Method:Get -Headers $headers -ContentType "application/json" -ErrorAction:Stop -TimeoutSec 60 -OutFile "$env-proxy-$($proxy.name).json"
+    Write-Host "Done..."
 }
 
-
-
-
-
-    
-    # $path1 = $baseURL+$org+"/apis/"+$($apiProxy.name)+"/revisions"
-    # $proxyRevs = Invoke-RestMethod -Uri $path1 -Method:Get -Headers $headers -ContentType "application/json" -ErrorAction:Stop -TimeoutSec 60
-
-    # # Get the latest deployed revision number
-    # $latestRevision = $proxyRevs | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum
-
-    # if(!(test-path -PathType container $($proxy.name))){
-    #     mkdir -p "$($proxy.name)"
-    #     cd $($proxy.name)
-    # }
-    # else {
-    #     cd $($proxy.name)
-    # }
-
-    # if(!(test-path -PathType container $latestRevision)){
-    #     mkdir -p "$latestRevision"
-    #     cd $latestRevision
-    # }
-    # else {
-    #     cd $latestRevision
-    # }
-    # try {
-    #     $path2 = $baseURL+$org+"/environments/"+$($env)+"/apis/"+$($proxy.name)+"/revisions/"+$($latestRevision)+"/deployments"
-    #     Write-Host $path2
-    #     Invoke-RestMethod -Uri $path2 -Method:Get -Headers $headers -ContentType "application/json" -ErrorAction:Stop -TimeoutSec 60 -OutFile "$env-proxy-$($proxy.name).json"
-    #     Write-Host "Done..."
-    #     # Get and print the status code
-    #     $statuscode = $path2.StatusCode
-    #     Write-Host "Status Code: $statuscode"
-    #     } catch [System.Net.HttpStatusCode] {
-    #         # Handle the specific error (HTTP status code 409) gracefully
-    #         Write-Host "Conflict (409) error occurred, but the script will continue."
-    #     } catch {
-    #         # Handle any other exceptions that may occur
-    #         Write-Host "An error occurred: $_"
-    #     }
-
-    
-    # cd ..
-    # cd ..
