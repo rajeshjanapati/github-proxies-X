@@ -246,7 +246,7 @@ foreach ($jsonFile in $jsonFiles) {
     # Your array
     $array = $developerget
     
-    $developers = $apiproductget.apiProduct  # Access the correct property
+    $developers = $developerget.developer  # Access the correct property
 
     foreach ($developer in $($developers)) {
         Write-Host "entered into foreach..."
