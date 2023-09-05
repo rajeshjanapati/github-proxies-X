@@ -187,9 +187,12 @@ foreach ($jsonFile in $jsonFiles) {
 
     foreach ($apiproduct in $($apiproducts)) {
         Write-Host "entered into foreach..."
-        if ($valueToCheck.name -eq "github-apiproduct") {
+        if ($apiproduct.name -eq $apiproductname) {
             Write-Host "github-apiproduct is present in the API products."
             # Perform actions when the item is found
+        }
+        else{
+            Write-Host "github-apiproduct is not PRESENT in the API products."
         }
     }
 }
