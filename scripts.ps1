@@ -164,9 +164,23 @@ foreach ($jsonFile in $jsonFiles) {
                 }
             Write-Host ($body1|ConvertTo-Json)
             Write-Host "$valueToCheck is not present in the array."
-            $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
-            $kvmcreate | ConvertTo-Json
+            try {
+                    
+                # Make the API request
+                $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
+                $kvmcreate | ConvertTo-Json
 
+                $statuscode = $kvmcreate.StatusCode
+
+                Write-Host "Status Code: $statuscode"
+            } catch [System.Net.HttpStatusCode] {
+                # Handle the specific error (HTTP status code 409) gracefully
+                Write-Host "Conflict (409) error occurred, but the script will continue."
+            } catch {
+                # Handle any other exceptions that may occur
+                Write-Host "An error occurred: $_"
+            }
+            
             $entries = $jsonData.entry
             Write-Host "Values: $vlaues"
 
