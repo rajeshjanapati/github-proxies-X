@@ -86,7 +86,7 @@ foreach ($jsonFile in $jsonFiles) {
     $headers.Add("Content-Type", "application/json")
 
 
-    $kvmget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'GET' -Headers $headers
+    $kvmget = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps" -Method 'GET' -Headers $headers
     $kvmget | ConvertTo-Json
     Write-Host $kvmget
 
