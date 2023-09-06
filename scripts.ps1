@@ -95,10 +95,18 @@ foreach ($jsonFile in $jsonFiles) {
     $array = $kvmget
 
     if ($array -contains $kvmget) {
-        Write-Host $kvmget
+        Write-Host "$kvmget is in the list"
     }
     else {
         Write-Host "$kvmget not found in the list"
+        $body1 =@{
+            "name"=$kvmName;
+            "encrypted"=true;
+            }
+        Write-Host ($body1|ConvertTo-Json)
+        Write-Host "$valueToCheck is not present in the array."
+        $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
+        $kvmcreate | ConvertTo-Json
 
     }
     
