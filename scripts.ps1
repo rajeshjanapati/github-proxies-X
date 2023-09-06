@@ -88,7 +88,7 @@ foreach ($jsonFile in $jsonFiles) {
 
     $kvmget = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps" -Method 'GET' -Headers $headers
     $kvmget | ConvertTo-Json
-    Write-Host $kvmget
+    Write-Host ($kvmget| ConvertTo-Json)
     
 
     # Your array
@@ -111,6 +111,7 @@ foreach ($jsonFile in $jsonFiles) {
     # }
     
     foreach ($valueToCheck in $array) {
+        Write-Host "entered into FOREACH..."
         if ($array -contains $kvmName) {
             Write-Host "entered into IF..."
             Write-Host "$valueToCheck is present in the array."
