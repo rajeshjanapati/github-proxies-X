@@ -79,7 +79,7 @@ foreach ($jsonFile in $jsonFiles) {
     $kvmName = $jsonData.name
 
     # Print the extracted value
-    # Write-Host "KVM Name: $kvmName"
+    Write-Host "KVM Name: $kvmName"
 
     $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
     $headers.Add("Authorization", "Bearer $token")
@@ -88,9 +88,10 @@ foreach ($jsonFile in $jsonFiles) {
 
     $kvmget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'GET' -Headers $headers
     $kvmget | ConvertTo-Json
-    # Write-Host $kvmget
+    Write-Host $kvmget
 
-    $url = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries"
+    $url = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/"+$kvmName+"/entries"
+    Write-Host $url
 
     $kvmgetentries = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
     $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
