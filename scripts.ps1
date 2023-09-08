@@ -7,10 +7,10 @@ $baseURL = "https://apigee.googleapis.com/v1/organizations/"
 $headers = @{Authorization = "Bearer $token"}
 
 # Set your GitHub repository information
-$repositoryOwner = "rajeshjanapati@gmail.com"
-$repositoryName = "github-proxies-X"
-$branchName = "main"  # Change this to the branch you want to access
-$githubToken = $git_token
+# $repositoryOwner = "rajeshjanapati@gmail.com"
+# $repositoryName = "github-proxies-X"
+# $branchName = "main"  # Change this to the branch you want to access
+# $githubToken = $git_token
 
 # # ------------------------------------Proxies------------------------------------------
 # Clone the repository
