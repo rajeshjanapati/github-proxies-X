@@ -371,13 +371,15 @@ foreach ($jsonFile in $jsonFiles) {
     # Extract the value of the "appId" key from the JSON data
     $appId = $jsonData.appId
 
+    Write-Host $appId
+
     $headers = @{
         "Authorization" = "Bearer $token"
         "Content-Type" = "application/json"
     }
 
     # Make a GET request to check if the app already exists
-    $appList = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps" -Method 'GET' -Headers $headers
+    $appList = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps" -Headers $headers
 
     Write-Host "Applist: $appList"
 
@@ -391,7 +393,7 @@ foreach ($jsonFile in $jsonFiles) {
         Write-Host "Entered into ELSE..."
         try {
             # Make a POST request to create a new app
-            $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps" -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
+            $response = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps" -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
             $response | ConvertTo-Json
             Write-Host "Done..."
             # Get and print the status code
