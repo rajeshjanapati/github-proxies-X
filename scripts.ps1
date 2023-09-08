@@ -356,63 +356,62 @@ $githubToken = $git_token
 
 # ---------------------------------------Apps-----------------------------------------------
 
-cd apps
+# cd apps
 
-# # Define your GitHub username, repository name, branch name, and folder path containing JSON files
-# $githubUsername = "rajeshjanapati"
-# $sourceRepo = "github-proxies-X"
-# $branchName = "main"
-# $folderPath = "apps"  # Path to the folder containing JSON files in the repo
+# # Read JSON files
+# $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 
-# # Define the GitHub API URL for fetching the file list from a specific branch
-# $apiUrl = "https://api.github.com/repos/"+$githubUsername+"/"+$sourceRepo+"/contents/"+$folderPath+"?ref="+$branchName
+# # Loop through each JSON file and make POST requests
+# foreach ($jsonFile in $jsonFiles) {
+#     Write-Host "Entered into FOREACH..."
+#     $jsonContent = Get-Content -Path $jsonFile -Raw
+#     # Parse the JSON content
+#     $jsonData = ConvertFrom-Json $jsonContent
 
-# # Set the request headers with your GitHub token or credentials
-# $headers = @{
-#     Authorization = "Bearer $git_token"
-# }
+#     # Extract the value of the "appId" key from the JSON data
+#     $appId = $jsonData.appId
 
-# # Make a GET request to fetch the list of files in the folder
-# $folderContent = Invoke-RestMethod $apiUrl -Headers $headers
+#     Write-Host $appId
 
-# # Loop through each file in the folder
-# foreach ($file in $folderContent) {
-#     # Check if the item is a file (not a directory)
-#     if ($file.type -eq "file") {
-#         # Define the file path for the current file
-#         $filePath = $file.path
-        
-#         # Make a GET request to fetch the file content
-#         $fileContent = Invoke-RestMethod $file.download_url -Headers $headers
+#     $headers = @{
+#         "Authorization" = "Bearer $token"
+#         "Content-Type" = "application/json"
+#     }
 
-#         # Parse and decode the file content (assuming it's base64 encoded)
-#         $jsonContent = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($fileContent.content))
+#     # Make a GET request to check if the app already exists
+#     $appList = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps" -Headers $headers
 
-#         # Parse the JSON content
-#         $jsonData = ConvertFrom-Json $jsonContent
+#     Write-Host "Applist: $appList"
 
-#         # Check if the app with a specific appId exists in Apigee X
-#         $appExists = $existingApps | Where-Object { $_.appId -eq $jsonData.appId }
+#     # Check if the "appId" already exists in the list of apps
+#     $appExists = $appList | Where-Object { $_.appId -eq $appId }
 
-#         if ($appExists) {
-#             Write-Host "App with appId $($jsonData.appId) already exists. Skipping..."
-#         } else {
-#             Write-Host "App with appId $($jsonData.appId) does not exist. Creating..."
-
-#             # Create the app in Apigee X (make a POST request with $jsonData)
-#             https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps
-
-#             Write-Host "App created successfully."
+#     if ($appExists) {
+#         Write-Host "$appId is already present in the API products."
+#         # Perform actions when the app already exists
+#     } else {
+#         Write-Host "Entered into ELSE..."
+#         try {
+#             # Make a POST request to create a new app
+#             $response = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps" -Method 'POST' -Headers $headers -Body $jsonContent
+#             $response | ConvertTo-Json
+#             Write-Host "Done..."
+#             # Get and print the status code
+#             $statusCode = $response.StatusCode
+#             Write-Host "Status Code: $statusCode"
+#         } catch {
+#             # Handle any exceptions that may occur
+#             Write-Host "An error occurred: $_"
 #         }
 #     }
 # }
 
+# cd ..
 
 
+# ---------------------------------------APP KEYS-----------------------------------------------
 
-
-
-
+cd keys
 
 # Read JSON files
 $jsonFiles = Get-ChildItem -Filter *.json -Recurse
@@ -424,46 +423,12 @@ foreach ($jsonFile in $jsonFiles) {
     # Parse the JSON content
     $jsonData = ConvertFrom-Json $jsonContent
 
-    # Extract the value of the "appId" key from the JSON data
-    $appId = $jsonData.appId
+    $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps/developer-test-app/keys' -Method 'POST' -Headers $headers -Body $jsonContent
+    $response | ConvertTo-Json
 
-    Write-Host $appId
-
-    $headers = @{
-        "Authorization" = "Bearer $token"
-        "Content-Type" = "application/json"
-    }
-
-    # Make a GET request to check if the app already exists
-    $appList = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps" -Headers $headers
-
-    Write-Host "Applist: $appList"
-
-    # Check if the "appId" already exists in the list of apps
-    $appExists = $appList | Where-Object { $_.appId -eq $appId }
-
-    if ($appExists) {
-        Write-Host "$appId is already present in the API products."
-        # Perform actions when the app already exists
-    } else {
-        Write-Host "Entered into ELSE..."
-        try {
-            # Make a POST request to create a new app
-            $response = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps" -Method 'POST' -Headers $headers -Body $jsonContent
-            $response | ConvertTo-Json
-            Write-Host "Done..."
-            # Get and print the status code
-            $statusCode = $response.StatusCode
-            Write-Host "Status Code: $statusCode"
-        } catch {
-            # Handle any exceptions that may occur
-            Write-Host "An error occurred: $_"
-        }
-    }
 }
 
 cd ..
-
 
 
 # # ------------------------------deployed proxies latest revision-------------------------------------------------------
