@@ -1,0 +1,21 @@
+{
+    "appId": "",
+    "attributes": [
+        {
+            "name": "github-app",
+            "value": "github app"
+        }
+    ],
+    "credentials": [
+        {
+            "apiProducts": [
+                {
+                    "apiproduct": "github-apiproduct",
+                    "status": "approved"
+                }
+            ]
+        }
+    ],
+    "name": "github-app",
+    "status": "approved"
+}
