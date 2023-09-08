@@ -1,10 +1,5 @@
 {
-  "test.developer@gmail.com": [
-    {
-      "name": "developer-test-app",
-      "consumerKey": "test153",
-      "consumerSecret": "6Wr30X2JASQew2htest",
-      "expiresInSeconds": "180"
-    }
-  ]
+  "consumerKey": "test153",
+  "consumerSecret": "6Wr30X2JASQew2htest",
+  "expiresInSeconds": "180"
 }
