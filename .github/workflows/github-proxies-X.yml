@@ -1,8 +1,11 @@
 name: Github to X(Proxies) PowerShell
 
-on: push
-
- 
+on:
+  workflow_dispatch:
+    inputs:
+      section:
+        description: 'Which section to run? (kvms, apiproducts, developers, proxies, apps, keys, etc.)'
+        required: true
 
 env:
 
