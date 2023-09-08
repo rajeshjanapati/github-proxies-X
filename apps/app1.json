@@ -14,6 +14,8 @@
                     "status": "approved"
                 }
             ]
+            "consumerKey": "apigee_key",
+            "consumerSecret": "apigee_123822",
         }
     ],
     "name": "github-app",
