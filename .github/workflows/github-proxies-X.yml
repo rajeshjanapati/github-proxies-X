@@ -83,6 +83,8 @@ jobs:
 
           $env:TOKEN = "${{ steps.auth.outputs.access_token }}"
 
+          $env:GIT_TOKEN = "${{ secrets.TOKEN_GIT }}"
+
           Invoke-Pester ./scripts.ps1 -Passthru
 
  

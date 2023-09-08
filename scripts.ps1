@@ -1,6 +1,8 @@
 # write-output Apigee Artifacts
 $token = $env:TOKEN
 $org = $env:ORG
+$git_token = $env:GIT_TOKEN
+
 $baseURL = "https://apigee.googleapis.com/v1/organizations/"
 $headers = @{Authorization = "Bearer $token"}
 
@@ -8,7 +10,7 @@ $headers = @{Authorization = "Bearer $token"}
 $repositoryOwner = "rajeshjanapati@gmail.com"
 $repositoryName = "github-proxies-X"
 $branchName = "main"  # Change this to the branch you want to access
-$githubToken = "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"
+$githubToken = $git_token
 
 # # ------------------------------------Proxies------------------------------------------
 # # Clone the repository
