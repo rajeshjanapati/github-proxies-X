@@ -127,7 +127,7 @@ foreach ($jsonFile in $jsonFiles) {
             try {
                     
                 # Make the API request
-                $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
+                $kvmcreate = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps" -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
                 $kvmcreate | ConvertTo-Json
 
                 $statuscode = $kvmcreate.StatusCode
