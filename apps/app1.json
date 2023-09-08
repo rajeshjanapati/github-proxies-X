@@ -2,24 +2,20 @@
     "appId": "",
     "attributes": [
         {
-            "name": "DisplayName",
-            "value": "github-app"
+            "name": "developer-test-app",
+            "value": "developer app"
         }
     ],
     "credentials": [
         {
             "apiProducts": [
                 {
-                    "apiproduct": "EchoProductCICD",
+                    "apiproduct": "github-apiproduct",
                     "status": "approved"
                 }
-            ],
-            "consumerKey": "testgit153",
-            "consumerSecret": "153github",
-            "status": "approved"
-        },
+            ]
+        }
     ],
-    "developerId": "5383bdf3-56dc-424d-b73f-eb669546f32e",
-    "name": "github-app",
+    "name": "developer-test-app",
     "status": "approved"
 }
