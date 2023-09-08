@@ -416,12 +416,6 @@ cd keys
 # Define the Apigee X API endpoint for creating keys
 $apiEndpoint = 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps/developer-test-app/keys'
 
-# Define the headers (including the authorization header)
-$headers = @{
-    "Authorization" = "Bearer $token"
-    "Content-Type" = "application/json"
-}
-
 # Read JSON files
 $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 
@@ -444,8 +438,6 @@ foreach ($jsonFile in $jsonFiles) {
         Write-Host "An error occurred: $_"
     }
 }
-
-
 cd ..
 
 
