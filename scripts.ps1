@@ -449,10 +449,7 @@ foreach ($jsonFile in $jsonFiles) {
         Write-Host "Entered into ELSE..."
         try {
             # Make a POST request to create a new app
-            $body2 = @{
-                Keyname = $jsonData
-            }
-            $response = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps" -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
+            $response = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps" -Method 'POST' -Headers $headers -Body $jsonContent
             $response | ConvertTo-Json
             Write-Host "Done..."
             # Get and print the status code
