@@ -13,7 +13,10 @@
                     "apiproduct": "github-apiproduct",
                     "status": "approved"
                 }
-            ]
+            ],
+            "consumerKey": "test123",
+            "consumerSecret": "12345643",
+            "expiresAt": "180"
         }
     ],
     "name": "developer-test-app",
