@@ -13,6 +13,7 @@ $headers = @{Authorization = "Bearer $token"}
 # $githubToken = $git_token
 
 $sectionToRun = $env:SECTION
+Write-Host "Section is: $sectionToRun"
 
 if ($sectionToRun -eq "kvms") {
     Write-Host "Entereed into KVMS..."
