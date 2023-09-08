@@ -452,7 +452,7 @@ foreach ($jsonFile in $jsonFiles) {
             $body2 = @{
                 Keyname = $jsonData
             }
-            $response = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps" -Method 'POST' -Headers $headers -Body ($body2 | ConvertTo-Json)
+            $response = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps" -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
             $response | ConvertTo-Json
             Write-Host "Done..."
             # Get and print the status code
