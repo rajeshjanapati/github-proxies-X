@@ -413,6 +413,15 @@ $githubToken = $git_token
 
 cd keys
 
+# Define the Apigee X API endpoint for creating keys
+$apiEndpoint = 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps/developer-test-app/keys'
+
+# Define the headers (including the authorization header)
+$headers = @{
+    "Authorization" = "Bearer $token"
+    "Content-Type" = "application/json"
+}
+
 # Read JSON files
 $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 
@@ -420,17 +429,22 @@ $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 foreach ($jsonFile in $jsonFiles) {
     Write-Host "Entered into FOREACH..."
     $jsonContent = Get-Content -Path $jsonFile -Raw
-
-    Write-Host $jsonContent
     # Parse the JSON content
     $jsonData = ConvertFrom-Json $jsonContent
 
-    Write-Host $jsonData
-
-    $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps/developer-test-app/keys' -Method 'POST' -Headers $headers -Body ($jsonData| ConvertTo-Json)
-    $response | ConvertTo-Json
-
+    try {
+        # Make a POST request to create keys for the app
+        $response = Invoke-RestMethod -Uri $apiEndpoint -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
+        
+        # Print the response (including the newly created keys)
+        Write-Host "Keys Created:"
+        Write-Host ($response | ConvertTo-Json)
+    } catch {
+        # Handle any exceptions that may occur
+        Write-Host "An error occurred: $_"
+    }
 }
+
 
 cd ..
 
