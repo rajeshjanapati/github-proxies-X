@@ -423,7 +423,7 @@ foreach ($jsonFile in $jsonFiles) {
     # Parse the JSON content
     $jsonData = ConvertFrom-Json $jsonContent
 
-    $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps/developer-test-app/keys' -Method 'POST' -Headers $headers -Body $jsonContent
+    $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps/developer-test-app/keys' -Method 'POST' -Headers $headers -Body ($jsonContent| ConvertTo-Json)
     $response | ConvertTo-Json
 
 }
