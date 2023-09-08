@@ -1,0 +1,12 @@
+{
+    "test.developer@gmail.com": [
+        {
+	        "apiProducts": [
+	            "weatherProduct"
+	        ],
+	        "name": "developer-test-app",
+	        "consumerKey": "test153",
+	        "consumerSecret": "6Wr30X2JASQew2htest"
+        }
+    ]
+}
