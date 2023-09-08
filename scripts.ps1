@@ -420,8 +420,12 @@ $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 foreach ($jsonFile in $jsonFiles) {
     Write-Host "Entered into FOREACH..."
     $jsonContent = Get-Content -Path $jsonFile -Raw
+
+    Write-Host $jsonContent
     # Parse the JSON content
     $jsonData = ConvertFrom-Json $jsonContent
+
+    Write-Host $jsonData
 
     $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps/developer-test-app/keys' -Method 'POST' -Headers $headers -Body ($jsonData| ConvertTo-Json)
     $response | ConvertTo-Json
