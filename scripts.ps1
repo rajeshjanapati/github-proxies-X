@@ -78,11 +78,24 @@ foreach ($jsonFile in $jsonFiles) {
     # Write-Host "KVM Name: $kvmName"
 
     $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-    $headers.Add("Authorization", "Bearer ya29.a0AfB_byDyIte3gwhzm9SGaFyLhw76Hd4eY7Y2R0Ls0fQ8XDsFhDp41mkCYI3D7-vCewhBMKWao5lX18id3O_GAYZCqvDl18UU1y_65rMNn4-VZu0dcyABP9Ke0HV4YZkyOfaVg7ImJXDCNQ_0lXk447CogbZ2Gz3tAlN5K0hFY14aCgYKAaASARESFQGOcNnCPz3czsHm7xZI3wSk6SQpXA0178")
+    $headers.Add("Authorization", "Bearer $token")
     $headers.Add("Content-Type", "application/json")
+
+    try {                    
+        # Make the API request
+        $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps" -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
+        $response | ConvertTo-Json
+        $statuscode = $response.StatusCode
+        Write-Host "Status Code: $statuscode"
+    } catch [System.Net.HttpStatusCode] {
+        # Handle the specific error (HTTP status code 409) gracefully
+        Write-Host "Conflict (409) error occurred, but the script will continue."
+    } catch {
+        # Handle any other exceptions that may occur
+        Write-Host "An error occurred: $_"
+    }
     
-    $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps" -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
-    $response | ConvertTo-Json
+    
     }
 
     
