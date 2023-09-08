@@ -72,6 +72,10 @@ foreach ($jsonFile in $jsonFiles) {
     # Parse the JSON content
     $jsonData = ConvertFrom-Json $jsonContent
 
+    Write-Host $jsonContent
+
+    Write-Host $jsonData
+
     # Extract the value of the "name" key from the JSON data
     $kvmName = $jsonData.name
 
