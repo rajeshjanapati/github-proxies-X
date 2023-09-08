@@ -15,7 +15,7 @@ $headers = @{Authorization = "Bearer $token"}
 $sectionToRun = $env:SECTION
 
 if ($sectionToRun -eq "kvms") {
-    # Code for 'cd kvms'
+    Write-Host "Entereed into KVMS..."
     # --------------------------------------KVMs-------------------------------------------
 
     cd kvms
@@ -390,17 +390,5 @@ if ($sectionToRun -eq "kvms") {
 } else {
     Write-Host "Invalid section specified: $sectionToRun"
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 # ----------------------------------------------------------------------------------------------
