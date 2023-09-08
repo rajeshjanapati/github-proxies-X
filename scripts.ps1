@@ -363,6 +363,7 @@ $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 
 # Loop through each JSON file and make POST requests
 foreach ($jsonFile in $jsonFiles) {
+    Write-Host "Entered into FOREACH..."
     $jsonContent = Get-Content -Path $jsonFile -Raw
     # Parse the JSON content
     $jsonData = ConvertFrom-Json $jsonContent
@@ -376,7 +377,9 @@ foreach ($jsonFile in $jsonFiles) {
     }
 
     # Make a GET request to check if the app already exists
-    $appList = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps' -Method 'GET' -Headers $headers
+    $appList = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps" -Method 'GET' -Headers $headers
+
+    Write-Host "Applist: $appList"
 
     # Check if the "appId" already exists in the list of apps
     $appExists = $appList | Where-Object { $_.appId -eq $appId }
@@ -385,9 +388,10 @@ foreach ($jsonFile in $jsonFiles) {
         Write-Host "$appId is already present in the API products."
         # Perform actions when the app already exists
     } else {
+        Write-Host "Entered into ELSE..."
         try {
             # Make a POST request to create a new app
-            $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
+            $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps" -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
             $response | ConvertTo-Json
             Write-Host "Done..."
             # Get and print the status code
