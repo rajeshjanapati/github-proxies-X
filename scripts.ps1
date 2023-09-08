@@ -358,6 +358,62 @@ $githubToken = $git_token
 
 cd apps
 
+# # Define your GitHub username, repository name, branch name, and folder path containing JSON files
+# $githubUsername = "rajeshjanapati"
+# $sourceRepo = "github-proxies-X"
+# $branchName = "main"
+# $folderPath = "apps"  # Path to the folder containing JSON files in the repo
+
+# # Define the GitHub API URL for fetching the file list from a specific branch
+# $apiUrl = "https://api.github.com/repos/"+$githubUsername+"/"+$sourceRepo+"/contents/"+$folderPath+"?ref="+$branchName
+
+# # Set the request headers with your GitHub token or credentials
+# $headers = @{
+#     Authorization = "Bearer $git_token"
+# }
+
+# # Make a GET request to fetch the list of files in the folder
+# $folderContent = Invoke-RestMethod $apiUrl -Headers $headers
+
+# # Loop through each file in the folder
+# foreach ($file in $folderContent) {
+#     # Check if the item is a file (not a directory)
+#     if ($file.type -eq "file") {
+#         # Define the file path for the current file
+#         $filePath = $file.path
+        
+#         # Make a GET request to fetch the file content
+#         $fileContent = Invoke-RestMethod $file.download_url -Headers $headers
+
+#         # Parse and decode the file content (assuming it's base64 encoded)
+#         $jsonContent = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($fileContent.content))
+
+#         # Parse the JSON content
+#         $jsonData = ConvertFrom-Json $jsonContent
+
+#         # Check if the app with a specific appId exists in Apigee X
+#         $appExists = $existingApps | Where-Object { $_.appId -eq $jsonData.appId }
+
+#         if ($appExists) {
+#             Write-Host "App with appId $($jsonData.appId) already exists. Skipping..."
+#         } else {
+#             Write-Host "App with appId $($jsonData.appId) does not exist. Creating..."
+
+#             # Create the app in Apigee X (make a POST request with $jsonData)
+#             https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps
+
+#             Write-Host "App created successfully."
+#         }
+#     }
+# }
+
+
+
+
+
+
+
+
 # Read JSON files
 $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 
@@ -396,7 +452,7 @@ foreach ($jsonFile in $jsonFiles) {
             $body2 = @{
                 Keyname = $jsonData
             }
-            $response = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps" -Method 'POST' -Headers $headers -Body ($body2 | ConvertTo-Json)
+            $response = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/developers/test.developer@gmail.com/apps" -Method 'POST' -Headers $headers -Body ($body2 | ConvertTo-Json)
             $response | ConvertTo-Json
             Write-Host "Done..."
             # Get and print the status code
@@ -414,6 +470,7 @@ cd ..
 
 
 # # ------------------------------deployed proxies latest revision-------------------------------------------------------
+
 # https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/deployments
 # $proxypathenv = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/deployments"
 # Invoke-RestMethod -Uri $proxypathenv -Method Get -Headers $headers -ContentType "application/json" -ErrorAction Stop -TimeoutSec 60 -OutFile "$env-proxies.json"
