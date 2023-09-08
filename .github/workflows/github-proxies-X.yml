@@ -4,8 +4,16 @@ on:
   workflow_dispatch:
     inputs:
       section:
-        description: 'Which section to run? (kvms, apiproducts, developers, proxies, apps, keys, etc.)'
+        type: choice
         required: true
+        description: select the item to run
+        options:
+          - kvms
+          - apiproducts
+          - developers
+          - proxies
+          - apps
+          - keys        
 
 env:
 
