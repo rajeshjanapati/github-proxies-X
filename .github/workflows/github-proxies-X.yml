@@ -28,9 +28,9 @@ jobs:
 
   apigee-window-artifacts:
 
-    name: Artifacts Windows Export
+    name: Proxies Export to Apigee X
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
  
 
