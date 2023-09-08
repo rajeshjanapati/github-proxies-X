@@ -64,170 +64,170 @@ $githubToken = "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"
 
 # --------------------------------------KVMs-------------------------------------------
 
-cd kvms
+# cd kvms
 
-# Read JSON files
-$jsonFiles = Get-ChildItem -Filter *.json -Recurse
+# # Read JSON files
+# $jsonFiles = Get-ChildItem -Filter *.json -Recurse
 
-# Loop through each JSON file and make POST requests
-foreach ($jsonFile in $jsonFiles) {
-    $jsonContent = Get-Content -Path $jsonFile -Raw
-    # Parse the JSON content
-    $jsonData = ConvertFrom-Json $jsonContent
+# # Loop through each JSON file and make POST requests
+# foreach ($jsonFile in $jsonFiles) {
+#     $jsonContent = Get-Content -Path $jsonFile -Raw
+#     # Parse the JSON content
+#     $jsonData = ConvertFrom-Json $jsonContent
 
-    # Extract the value of the "name" key from the JSON data
-    $kvmName = $jsonData.name
+#     # Extract the value of the "name" key from the JSON data
+#     $kvmName = $jsonData.name
 
-    # Print the extracted value
-    Write-Host "KVM Name: $kvmName"
+#     # Print the extracted value
+#     Write-Host "KVM Name: $kvmName"
 
-    $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-    $headers.Add("Authorization", "Bearer $token")
-    $headers.Add("Content-Type", "application/json")
+#     $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+#     $headers.Add("Authorization", "Bearer $token")
+#     $headers.Add("Content-Type", "application/json")
 
 
-    $kvmget = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps" -Method 'GET' -Headers $headers
-    $kvmget | ConvertTo-Json
-    Write-Host ($kvmget| ConvertTo-Json)
+#     $kvmget = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps" -Method 'GET' -Headers $headers
+#     $kvmget | ConvertTo-Json
+#     Write-Host ($kvmget| ConvertTo-Json)
     
 
-    # Your array
-    $array = $kvmget
+#     # Your array
+#     $array = $kvmget
 
-    # if ($array -contains $kvmget) {
-    #     Write-Host "$kvmget is in the list"
-    # }
-    # else {
-    #     Write-Host "$kvmget not found in the list"
-    #     $body1 =@{
-    #         "name"=$kvmName;
-    #         "encrypted"=true;
-    #         }
-    #     Write-Host ($body1|ConvertTo-Json)
-    #     Write-Host "$valueToCheck is not present in the array."
-    #     $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
-    #     $kvmcreate | ConvertTo-Json
+#     # if ($array -contains $kvmget) {
+#     #     Write-Host "$kvmget is in the list"
+#     # }
+#     # else {
+#     #     Write-Host "$kvmget not found in the list"
+#     #     $body1 =@{
+#     #         "name"=$kvmName;
+#     #         "encrypted"=true;
+#     #         }
+#     #     Write-Host ($body1|ConvertTo-Json)
+#     #     Write-Host "$valueToCheck is not present in the array."
+#     #     $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
+#     #     $kvmcreate | ConvertTo-Json
 
-    # }
+#     # }
     
-    foreach ($valueToCheck in $array) {
-        Write-Host "entered into FOREACH..."
-        if ($array -contains $kvmName) {
-            Write-Host "entered into IF..."
-            Write-Host "$valueToCheck is present in the array."
-            $entries = $jsonData.entry
-            Write-Host "Values: $vlaues"
+#     foreach ($valueToCheck in $array) {
+#         Write-Host "entered into FOREACH..."
+#         if ($array -contains $kvmName) {
+#             Write-Host "entered into IF..."
+#             Write-Host "$valueToCheck is present in the array."
+#             $entries = $jsonData.entry
+#             Write-Host "Values: $vlaues"
 
-            # $url = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/"+$kvmName+"/entries"
-            # Write-Host $url
+#             # $url = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/"+$kvmName+"/entries"
+#             # Write-Host $url
 
-            # $kvmgetentries = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
-            # $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
-            # # Write-Host $kvmgetentriesvalues
+#             # $kvmgetentries = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
+#             # $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
+#             # # Write-Host $kvmgetentriesvalues
             
             
-            # # # Output the KVM entries for debugging
-            # $kvmgetentriesvalues | Format-Table
+#             # # # Output the KVM entries for debugging
+#             # $kvmgetentriesvalues | Format-Table
         
-            foreach ($entry in $entries) {
-                Write-Host "step-2"
-                $name = $entry.key
-                $value = $entry.value
-                Write-Host "Key: $name, Value: $value"
-                $body2 = @{
-                    "name" = $name;
-                    "value" = $value;
-                }
-                Write-Host "body2: $body2"
+#             foreach ($entry in $entries) {
+#                 Write-Host "step-2"
+#                 $name = $entry.key
+#                 $value = $entry.value
+#                 Write-Host "Key: $name, Value: $value"
+#                 $body2 = @{
+#                     "name" = $name;
+#                     "value" = $value;
+#                 }
+#                 Write-Host "body2: $body2"
                 
-                try {
+#                 try {
                     
-                    # Make the API request
-                    $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2 | ConvertTo-Json)
+#                     # Make the API request
+#                     $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2 | ConvertTo-Json)
                 
-                    # Get and print the status code
-                    $statuscode = $response.StatusCode
-                    Write-Host "Status Code: $statuscode"
-                } catch [System.Net.HttpStatusCode] {
-                    # Handle the specific error (HTTP status code 409) gracefully
-                    Write-Host "Conflict (409) error occurred, but the script will continue."
-                } catch {
-                    # Handle any other exceptions that may occur
-                    Write-Host "An error occurred: $_"
-                }
+#                     # Get and print the status code
+#                     $statuscode = $response.StatusCode
+#                     Write-Host "Status Code: $statuscode"
+#                 } catch [System.Net.HttpStatusCode] {
+#                     # Handle the specific error (HTTP status code 409) gracefully
+#                     Write-Host "Conflict (409) error occurred, but the script will continue."
+#                 } catch {
+#                     # Handle any other exceptions that may occur
+#                     Write-Host "An error occurred: $_"
+#                 }
 
-            }
-        } else {
-            Write-Host "entered into ELSE..."
-            $body1 =@{
-                "name"=$kvmName;
-                "encrypted"=true;
-                }
-            Write-Host ($body1|ConvertTo-Json)
-            Write-Host "$valueToCheck is not present in the array."
-            try {
+#             }
+#         } else {
+#             Write-Host "entered into ELSE..."
+#             $body1 =@{
+#                 "name"=$kvmName;
+#                 "encrypted"=true;
+#                 }
+#             Write-Host ($body1|ConvertTo-Json)
+#             Write-Host "$valueToCheck is not present in the array."
+#             try {
                     
-                # Make the API request
-                $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
-                $kvmcreate | ConvertTo-Json
+#                 # Make the API request
+#                 $kvmcreate = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps' -Method 'POST' -Headers $headers -Body ($body1|ConvertTo-Json)
+#                 $kvmcreate | ConvertTo-Json
 
-                $statuscode = $kvmcreate.StatusCode
+#                 $statuscode = $kvmcreate.StatusCode
 
-                Write-Host "Status Code: $statuscode"
-            } catch [System.Net.HttpStatusCode] {
-                # Handle the specific error (HTTP status code 409) gracefully
-                Write-Host "Conflict (409) error occurred, but the script will continue."
-            } catch {
-                # Handle any other exceptions that may occur
-                Write-Host "An error occurred: $_"
-            }
+#                 Write-Host "Status Code: $statuscode"
+#             } catch [System.Net.HttpStatusCode] {
+#                 # Handle the specific error (HTTP status code 409) gracefully
+#                 Write-Host "Conflict (409) error occurred, but the script will continue."
+#             } catch {
+#                 # Handle any other exceptions that may occur
+#                 Write-Host "An error occurred: $_"
+#             }
             
-            $entries = $jsonData.entry
-            Write-Host "Values: $vlaues"
+#             $entries = $jsonData.entry
+#             Write-Host "Values: $vlaues"
 
-            # $url = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/"+$kvmName+"/entries"
-            # Write-Host $url
+#             # $url = "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/"+$kvmName+"/entries"
+#             # Write-Host $url
 
-            # $kvmgetentries = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
-            # $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
-            # # Write-Host $kvmgetentriesvalues
+#             # $kvmgetentries = Invoke-RestMethod -Uri $url -Method 'GET' -Headers $headers
+#             # $kvmgetentriesvalues = $kvmgetentries | ConvertTo-Json
+#             # # Write-Host $kvmgetentriesvalues
             
             
-            # # # Output the KVM entries for debugging
-            # $kvmgetentriesvalues | Format-Table
+#             # # # Output the KVM entries for debugging
+#             # $kvmgetentriesvalues | Format-Table
         
-            foreach ($entry in $entries) {
-                Write-Host "step-2"
-                $name = $entry.key
-                $value = $entry.value
-                Write-Host "Key: $name, Value: $value"
-                $body2 = @{
-                    "name" = $name;
-                    "value" = $value;
-                }
-                Write-Host "body2: $body2"
+#             foreach ($entry in $entries) {
+#                 Write-Host "step-2"
+#                 $name = $entry.key
+#                 $value = $entry.value
+#                 Write-Host "Key: $name, Value: $value"
+#                 $body2 = @{
+#                     "name" = $name;
+#                     "value" = $value;
+#                 }
+#                 Write-Host "body2: $body2"
                 
-                try {
+#                 try {
                     
-                    # Make the API request
-                    $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2 | ConvertTo-Json)
+#                     # Make the API request
+#                     $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps/$kvmName/entries" -Method 'POST' -Headers $headers -Body ($body2 | ConvertTo-Json)
                 
-                    # Get and print the status code
-                    $statuscode = $response.StatusCode
-                    Write-Host "Status Code: $statuscode"
-                } catch [System.Net.HttpStatusCode] {
-                    # Handle the specific error (HTTP status code 409) gracefully
-                    Write-Host "Conflict (409) error occurred, but the script will continue."
-                } catch {
-                    # Handle any other exceptions that may occur
-                    Write-Host "An error occurred: $_"
-                }
+#                     # Get and print the status code
+#                     $statuscode = $response.StatusCode
+#                     Write-Host "Status Code: $statuscode"
+#                 } catch [System.Net.HttpStatusCode] {
+#                     # Handle the specific error (HTTP status code 409) gracefully
+#                     Write-Host "Conflict (409) error occurred, but the script will continue."
+#                 } catch {
+#                     # Handle any other exceptions that may occur
+#                     Write-Host "An error occurred: $_"
+#                 }
 
-            }
-        }
-    }
-}
-cd ..
+#             }
+#         }
+#     }
+# }
+# cd ..
 
 # -------------------------------------API Products----------------------------------------------
 
@@ -351,6 +351,71 @@ cd ..
 #     }
 
 # cd ..
+
+# ---------------------------------------Apps-----------------------------------------------
+
+cd apps
+
+# Read JSON files
+$jsonFiles = Get-ChildItem -Filter *.json -Recurse
+
+# Loop through each JSON file and make POST requests
+foreach ($jsonFile in $jsonFiles) {
+    $jsonContent = Get-Content -Path $jsonFile -Raw
+    # Parse the JSON content
+    $jsonData = ConvertFrom-Json $jsonContent
+    Write-Host ($jsonData | ConvertTo-Json)
+
+    # Extract the value of the "name" key from the JSON data
+    $appid = $jsonData.appId
+
+    # Print the extracted value
+    Write-Host "App Name: $appid"
+
+    $headers = @{
+        "Authorization" = "Bearer $token"
+        "Content-Type" = "application/json"
+    }
+
+    $appget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps' -Method 'GET' -Headers $headers
+    # Print the entire JSON response to inspect its structure
+    Write-Host ($appget | ConvertTo-Json)
+
+    # Your array
+    $array = $appget
+    
+    $apps = $appget.appId  # Access the correct property
+
+    Write-Host $apps
+
+    foreach ($app in $array) {
+        Write-Host "entered into foreach..."
+        if ($appid -eq $apps) {
+            Write-Host "$appid is present in the API products."
+            # Perform actions when the item is found
+        }
+        else{
+            try {
+                $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
+                $response | ConvertTo-Json
+                Write-Host "Done..."
+                # Get and print the status code
+                $statuscode = $response.StatusCode
+                Write-Host "Status Code: $statuscode"
+                } catch [System.Net.HttpStatusCode] {
+                    # Handle the specific error (HTTP status code 409) gracefully
+                    Write-Host "Conflict (409) error occurred, but the script will continue."
+                } catch {
+                    # Handle any other exceptions that may occur
+                    Write-Host "An error occurred: $_"
+                }
+            }
+        }
+    }
+
+cd ..
+
+
 
 # # ------------------------------deployed proxies latest revision-------------------------------------------------------
 # https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/deployments
