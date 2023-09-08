@@ -123,8 +123,8 @@ foreach ($jsonFile in $jsonFiles) {
         } else {
             Write-Host "entered into ELSE..."
             $body1 =@{
-                "name"=$kvmName;
-                "encrypted"="true";
+                "name"=$kvmName,
+                "encrypted"="true"
                 }
             Write-Host ($body1|ConvertTo-Json)
             # Write-Host "$valueToCheck is not present in the array."
