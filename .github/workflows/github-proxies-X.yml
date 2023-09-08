@@ -1,19 +1,19 @@
 name: Github to X(Proxies) PowerShell
 
-on:
-  workflow_dispatch:
-    inputs:
-      section:
-        type: choice
-        required: true
-        description: select the item to run
-        options:
-          - kvms
-          - apiproducts
-          - developers
-          - proxies
-          - apps
-          - keys        
+on: push
+  # workflow_dispatch:
+  #   inputs:
+  #     section:
+  #       type: choice
+  #       required: true
+  #       description: select the item to run
+  #       options:
+  #         - kvms
+  #         - apiproducts
+  #         - developers
+  #         - proxies
+  #         - apps
+  #         - keys        
 
 env:
 
