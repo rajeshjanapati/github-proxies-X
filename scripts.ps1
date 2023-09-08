@@ -364,54 +364,39 @@ foreach ($jsonFile in $jsonFiles) {
     $jsonContent = Get-Content -Path $jsonFile -Raw
     # Parse the JSON content
     $jsonData = ConvertFrom-Json $jsonContent
-    Write-Host ($jsonData | ConvertTo-Json)
 
-    # Extract the value of the "name" key from the JSON data
-    $appid = $jsonData.appId
-
-    # Print the extracted value
-    Write-Host "App Name: $appid"
+    # Extract the value of the "appId" key from the JSON data
+    $appId = $jsonData.appId
 
     $headers = @{
         "Authorization" = "Bearer $token"
         "Content-Type" = "application/json"
     }
 
-    $appget = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps' -Method 'GET' -Headers $headers
-    # Print the entire JSON response to inspect its structure
-    Write-Host ($appget | ConvertTo-Json)
+    # Make a GET request to check if the app already exists
+    $appList = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps' -Method 'GET' -Headers $headers
 
-    # Your array
-    $array = $appget
-    
-    $apps = $appget.appId  # Access the correct property
+    # Check if the "appId" already exists in the list of apps
+    $appExists = $appList | Where-Object { $_.appId -eq $appId }
 
-    Write-Host $apps
-
-    foreach ($app in $array) {
-        Write-Host "entered into foreach..."
-        if ($appid -eq $apps) {
-            Write-Host "$appid is present in the API products."
-            # Perform actions when the item is found
-        }
-        else{
-            try {
-                $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
-                $response | ConvertTo-Json
-                Write-Host "Done..."
-                # Get and print the status code
-                $statuscode = $response.StatusCode
-                Write-Host "Status Code: $statuscode"
-                } catch [System.Net.HttpStatusCode] {
-                    # Handle the specific error (HTTP status code 409) gracefully
-                    Write-Host "Conflict (409) error occurred, but the script will continue."
-                } catch {
-                    # Handle any other exceptions that may occur
-                    Write-Host "An error occurred: $_"
-                }
-            }
+    if ($appExists) {
+        Write-Host "$appId is already present in the API products."
+        # Perform actions when the app already exists
+    } else {
+        try {
+            # Make a POST request to create a new app
+            $response = Invoke-RestMethod 'https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/apps' -Method 'POST' -Headers $headers -Body ($jsonData | ConvertTo-Json)
+            $response | ConvertTo-Json
+            Write-Host "Done..."
+            # Get and print the status code
+            $statusCode = $response.StatusCode
+            Write-Host "Status Code: $statusCode"
+        } catch {
+            # Handle any exceptions that may occur
+            Write-Host "An error occurred: $_"
         }
     }
+}
 
 cd ..
 
