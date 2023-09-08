@@ -6,11 +6,11 @@ $git_token = $env:GIT_TOKEN
 $baseURL = "https://apigee.googleapis.com/v1/organizations/"
 $headers = @{Authorization = "Bearer $token"}
 
-# Set your GitHub repository information
-$repositoryOwner = "rajeshjanapati@gmail.com"
-$repositoryName = "github-proxies-X"
-$branchName = "main"  # Change this to the branch you want to access
-$githubToken = $git_token
+# # Set your GitHub repository information
+# $repositoryOwner = "rajeshjanapati@gmail.com"
+# $repositoryName = "github-proxies-X"
+# $branchName = "main"  # Change this to the branch you want to access
+# $githubToken = $git_token
 
 # # ------------------------------------Proxies------------------------------------------
 
@@ -124,14 +124,14 @@ foreach ($jsonFile in $jsonFiles) {
             Write-Host "entered into ELSE..."
             $body1 =@{
                 "name"=$kvmName;
-                "encrypted"=true;
+                "encrypted"="true";
                 }
             Write-Host ($body1|ConvertTo-Json)
             # Write-Host "$valueToCheck is not present in the array."
             try {
                     
                 # Make the API request
-                $kvmcreate = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps" -Method 'POST' -Headers $headers -Body $jsonContent
+                $kvmcreate = Invoke-RestMethod "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps" -Method 'POST' -Headers $headers -Body $jsonContent
                 $kvmcreate | ConvertTo-Json
 
                 $statuscode = $kvmcreate.StatusCode
