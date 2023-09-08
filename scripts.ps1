@@ -81,7 +81,7 @@ foreach ($jsonFile in $jsonFiles) {
     $headers.Add("Authorization", "Bearer ya29.a0AfB_byDyIte3gwhzm9SGaFyLhw76Hd4eY7Y2R0Ls0fQ8XDsFhDp41mkCYI3D7-vCewhBMKWao5lX18id3O_GAYZCqvDl18UU1y_65rMNn4-VZu0dcyABP9Ke0HV4YZkyOfaVg7ImJXDCNQ_0lXk447CogbZ2Gz3tAlN5K0hFY14aCgYKAaASARESFQGOcNnCPz3czsHm7xZI3wSk6SQpXA0178")
     $headers.Add("Content-Type", "application/json")
     
-    $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps" -Method:POST -Headers $headers -Body ($jsonData)
+    $response = Invoke-RestMethod -Uri "https://apigee.googleapis.com/v1/organizations/esi-apigee-x-394004/environments/eval/keyvaluemaps" -Method:POST -Headers $headers -Body ($jsonData | ConvertTo-Json))
     $response | ConvertTo-Json
     }
 
