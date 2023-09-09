@@ -1,19 +1,19 @@
 name: Github to X(Proxies) PowerShell
 
-on: push
-  # workflow_dispatch:
-  #   inputs:
-  #     section:
-  #       type: choice
-  #       required: true
-  #       description: select the item to run
-  #       options:
-  #         - kvms
-  #         - apiproducts
-  #         - developers
-  #         - proxies
-  #         - apps
-  #         - keys        
+on:
+  workflow_dispatch:
+    inputs:
+      section:
+        type: choice
+        required: true
+        description: select the item to run
+        options:
+          - kvms
+          - apiproducts
+          - developers
+          - proxies
+          - apps
+          - keys        
 
 env:
 
@@ -95,6 +95,8 @@ jobs:
           $env:TOKEN = "${{ steps.auth.outputs.access_token }}"
 
           $env:GIT_TOKEN = "${{ secrets.TOKEN_GIT }}"
+
+          $selectedSection = ${{ github.event.inputs.section }}
 
           Invoke-Pester ./scripts.ps1 -Passthru
 
