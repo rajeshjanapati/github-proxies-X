@@ -96,7 +96,7 @@ jobs:
 
           $env:GIT_TOKEN = "${{ secrets.TOKEN_GIT }}"
 
-          $selectedSection = ${{ github.event.inputs.section }}
+          $selectedSection = "${{ github.event.inputs.section }}"
 
           Invoke-Pester ./scripts.ps1 -Passthru
 
